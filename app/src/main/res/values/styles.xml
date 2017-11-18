@@ -6,6 +6,25 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="android:textColor">@color/buttonColorText</item>
+    </style>
+
+    <style name="teamStyle">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">@dimen/teamSize</item>
+        <item name="android:background">@color/colorPrimaryAlpha</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="teamStyle.Score">
+        <item name="android:textSize">@dimen/scoreSize</item>
+    </style>
+
+    <style name="buttonStyle" parent="AppTheme">
+        <item name="android:layout_marginLeft">@dimen/buttonMargin</item>
+        <item name="android:layout_marginRight">@dimen/buttonMargin</item>
     </style>
 
 </resources>
