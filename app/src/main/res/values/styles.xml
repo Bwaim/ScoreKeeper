@@ -22,6 +22,10 @@
         <item name="android:textSize">@dimen/scoreSize</item>
     </style>
 
+    <style name="teamStyle.Timer">
+        <item name="android:textSize">@dimen/timerSize</item>
+    </style>
+
     <style name="buttonStyle" parent="AppTheme">
         <item name="android:layout_marginLeft">@dimen/buttonMargin</item>
         <item name="android:layout_marginRight">@dimen/buttonMargin</item>

@@ -109,7 +109,7 @@
 
     <TextView
         android:id="@+id/timer"
-        style="@style/teamStyle.Score"
+        style="@style/teamStyle.Timer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/teamsLayout"
@@ -117,13 +117,30 @@
         android:layout_marginTop="@dimen/layoutMargin"
         android:text="@string/timerStart" />
 
-    <Button
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/layoutMargin"
-        android:onClick="startNewProgram"
-        android:text="@string/reset" />
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startDebugging"
+            android:text="@string/start" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="startNewProgram"
+            android:text="@string/reset" />
+
+    </LinearLayout>
 
 </RelativeLayout>

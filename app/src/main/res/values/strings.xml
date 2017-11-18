@@ -7,5 +7,7 @@
     <string name="error2">Logic error</string>
     <string name="error3">Virus attack</string>
     <string name="teamB">Coder B</string>
-    <string name="timerStart">1:30</string>
+    <string name="timerStart">01:30</string>
+    <string name="start">Start!</string>
+    <string name="resultEgality">No winner!</string>
 </resources>

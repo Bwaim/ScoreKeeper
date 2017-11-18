@@ -1,14 +1,23 @@
 package com.bwaim.scorekeeper;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
     // Initial number of bugs
     final int NUMBER_BUGS_AT_BEGINING = 25;
+
+    // Initial time to correct the program (in milliseconds)
+    final long TIME_TO_CORRECT = 90000;
+    final long TIMER_INTERVAL = 1000;
+
+    private TextView timerTV;
 
     // current number of bugs of the team A
     private int numberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
@@ -16,11 +25,45 @@ public class MainActivity extends AppCompatActivity {
     // current number of bugs of the team B
     private int numberBugsTeamB = NUMBER_BUGS_AT_BEGINING;
 
+    // The count down timer
+    private CountDownTimer countDownTimer;
+
+    // boolean to know if the debugging session is started
+    private boolean started = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Get the TextView of the timer
+        timerTV = findViewById(R.id.timer);
+        countDownTimer = initCountDownTimer();
+        // Trick for displaying the count down
+        countDownTimer.onTick(TIME_TO_CORRECT);
+    }
+
+    /**
+     * Initialise a countDownTimer
+     *
+     * @return the countDownTimer created
+     */
+    private CountDownTimer initCountDownTimer() {
+        return new CountDownTimer(TIME_TO_CORRECT, TIMER_INTERVAL) {
+
+            public void onTick(long millisUntilFinished) {
+                long minutes = millisUntilFinished / 1000 / 60;
+                timerTV.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes,
+                        (millisUntilFinished - (minutes * 60 * 1000)) / 1000));
+            }
+
+            public void onFinish() {
+                String winner = (numberBugsTeamA < numberBugsTeamB) ?
+                        getString(R.string.teamA) + " wins" :
+                        (numberBugsTeamB < numberBugsTeamA) ? getString(R.string.teamB) + " wins" : getString(R.string.resultEgality);
+                timerTV.setText(winner);
+            }
+        };
     }
 
     /**
@@ -46,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctSyntaxErrorTeamA(View view) {
         // To avoid the score to go under 0
-        if (numberBugsTeamA > 0) {
+        if (started && numberBugsTeamA > 0) {
             numberBugsTeamA--;
             refreshScoreTeamA();
         }
@@ -59,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctLogicErrorTeamA(View view) {
         // To avoid the score to go under 0
-        if (numberBugsTeamA > 2) {
+        if (started && numberBugsTeamA > 2) {
             numberBugsTeamA -= 3;
             refreshScoreTeamA();
         }
@@ -71,8 +114,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view the calling button
      */
     public void virusAttackTeamA(View view) {
-        numberBugsTeamB += 5;
-        refreshScoreTeamB();
+        if (started) {
+            numberBugsTeamB += 5;
+            refreshScoreTeamB();
+        }
     }
 
     /**
@@ -82,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctSyntaxErrorTeamB(View view) {
         // To avoid the score to go under 0
-        if (numberBugsTeamB > 0) {
+        if (started && numberBugsTeamB > 0) {
             numberBugsTeamB--;
             refreshScoreTeamB();
         }
@@ -95,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctLogicErrorTeamB(View view) {
         // To avoid the score to go under 0
-        if (numberBugsTeamB > 2) {
+        if (started && numberBugsTeamB > 2) {
             numberBugsTeamB -= 3;
             refreshScoreTeamB();
         }
@@ -107,8 +152,22 @@ public class MainActivity extends AppCompatActivity {
      * @param view the calling button
      */
     public void virusAttackTeamB(View view) {
-        numberBugsTeamA += 5;
-        refreshScoreTeamA();
+        if (started) {
+            numberBugsTeamA += 5;
+            refreshScoreTeamA();
+        }
+    }
+
+    /**
+     * Start the debugging session
+     *
+     * @param view the calling button
+     */
+    public void startDebugging(View view) {
+        if (!started) {
+            countDownTimer.start();
+            started = true;
+        }
     }
 
     /**
@@ -123,6 +182,11 @@ public class MainActivity extends AppCompatActivity {
         refreshScoreTeamA();
         refreshScoreTeamB();
 
-        // TODO Reinit the timer
+        // Reinit the timer
+        countDownTimer.cancel();
+        // Trick to refresh the display
+        countDownTimer.onTick(TIME_TO_CORRECT);
+        started = false;
     }
+
 }

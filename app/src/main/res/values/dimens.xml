@@ -2,6 +2,7 @@
 <resources>
     <dimen name="teamSize">32sp</dimen>
     <dimen name="scoreSize">72sp</dimen>
+    <dimen name="timerSize">48sp</dimen>
     <dimen name="buttonMargin">24dp</dimen>
     <dimen name="layoutMargin">24dp</dimen>
     <dimen name="separatorSize">2dp</dimen>
