@@ -38,18 +38,21 @@
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="correctSyntaxErrorTeamA"
                 android:text="@string/error1" />
 
             <Button
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="correctLogicErrorTeamA"
                 android:text="@string/error2" />
 
             <Button
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="virusAttackTeamA"
                 android:text="@string/error3" />
 
         </LinearLayout>
@@ -83,18 +86,21 @@
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="correctSyntaxErrorTeamB"
                 android:text="@string/error1" />
 
             <Button
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="correctLogicErrorTeamB"
                 android:text="@string/error2" />
 
             <Button
                 style="@style/buttonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="virusAttackTeamB"
                 android:text="@string/error3" />
 
         </LinearLayout>
@@ -117,6 +123,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/layoutMargin"
+        android:onClick="startNewProgram"
         android:text="@string/reset" />
 
 </RelativeLayout>
