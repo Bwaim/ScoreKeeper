@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/coding"
+    android:background="@drawable/gradient"
     tools:context="com.bwaim.scorekeeper.MainActivity">
 
     <LinearLayout
@@ -119,10 +119,10 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_height="match_parent"
+        android:layout_below="@id/timer"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/layoutMargin"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <Button
