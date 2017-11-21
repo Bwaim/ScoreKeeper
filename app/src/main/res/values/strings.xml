@@ -9,5 +9,6 @@
     <string name="teamB">Coder B</string>
     <string name="timerStart">01:30</string>
     <string name="start">Start!</string>
+    <string name="pause">Pause</string>
     <string name="resultEgality">No winner!</string>
 </resources>

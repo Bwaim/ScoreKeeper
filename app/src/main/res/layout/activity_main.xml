@@ -126,11 +126,12 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/startPauseButton"
             style="@style/buttonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="startDebugging"
+            android:onClick="startPauseDebugging"
             android:text="@string/start" />
 
         <Button
