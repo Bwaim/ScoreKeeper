@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/layoutMargin"
+    android:paddingTop="@dimen/layoutMargin"
+    tools:context="com.bwaim.scorekeeper.MainActivity">
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/teamsLayout"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+
+    <!--android:layout_weight="3"-->
+    <!--android:orientation="horizontal">-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/teamStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/teamA" />
+
+        <TextView
+            android:id="@+id/scoreTeamA"
+            style="@style/teamStyle.Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/beginScore" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="correctSyntaxErrorTeamA"
+            android:text="@string/error1" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="correctLogicErrorTeamA"
+            android:text="@string/error2" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="virusAttackTeamA"
+            android:text="@string/error3" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="@dimen/separatorSize"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/teamStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/teamB" />
+
+        <TextView
+            android:id="@+id/scoreTeamB"
+            style="@style/teamStyle.Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/beginScore" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="correctSyntaxErrorTeamB"
+            android:text="@string/error1" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="correctLogicErrorTeamB"
+            android:text="@string/error2" />
+
+        <Button
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="virusAttackTeamB"
+            android:text="@string/error3" />
+
+    </LinearLayout>
+
+    <!--</LinearLayout>-->
+
+    <View
+        android:layout_width="@dimen/separatorSize"
+        android:layout_height="match_parent"
+        android:background="@color/colorAccent" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/layoutMargin">
+
+        <TextView
+            android:id="@+id/timer"
+            style="@style/teamStyle.Timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingBottom="@dimen/timerPadding"
+            android:paddingTop="@dimen/timerPadding"
+            android:text="@string/timerStart" />
+
+        <Button
+            android:id="@+id/startPauseButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/timer"
+            android:onClick="startPauseDebugging"
+            android:text="@string/start" />
+
+        <Button
+            android:id="@+id/newButton"
+            style="@style/buttonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/startPauseButton"
+            android:onClick="startNewProgram"
+            android:text="@string/reset" />
+
+    </RelativeLayout>
+
+</LinearLayout>
