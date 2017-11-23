@@ -24,31 +24,31 @@ public class MainActivity extends AppCompatActivity {
     final String MILLIS_UNTIL_FINISHED = "millisUntilFinished";
 
     // The TextView of the timer
-    private TextView timerTV;
+    private TextView mTimerTV;
 
     // The TextView of the team A score
-    private TextView scoreATV;
+    private TextView mScoreATV;
 
     // The TextView of the team B score
-    private TextView scoreBTV;
+    private TextView mScoreBTV;
 
     // The startPauseButton
-    private Button startPauseB;
+    private Button mStartPauseB;
 
     // current number of bugs of the team A
-    private int numberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
+    private int mNumberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
 
     // current number of bugs of the team B
-    private int numberBugsTeamB = NUMBER_BUGS_AT_BEGINING;
+    private int mNumberBugsTeamB = NUMBER_BUGS_AT_BEGINING;
 
     // The count down timer
-    private CountDownTimer countDownTimer;
+    private CountDownTimer mCountDownTimer;
 
     // The save of the millis until the countDown finish
-    private long savedMillisUntilFinished = TIME_TO_CORRECT;
+    private long mSavedMillisUntilFinished = TIME_TO_CORRECT;
 
     // boolean to know if the debugging session is started
-    private boolean started = false;
+    private boolean mStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,22 +56,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Get the TextView of the timer, the score for team A and B, the start - pause button
-        timerTV = findViewById(R.id.timer);
-        scoreATV = findViewById(R.id.scoreTeamA);
-        scoreBTV = findViewById(R.id.scoreTeamB);
-        startPauseB = findViewById(R.id.startPauseButton);
+        mTimerTV = findViewById(R.id.timer);
+        mScoreATV = findViewById(R.id.scoreTeamA);
+        mScoreBTV = findViewById(R.id.scoreTeamB);
+        mStartPauseB = findViewById(R.id.startPauseButton);
 
         // Restore the state if it's not the first launch
         if (savedInstanceState != null) {
-            numberBugsTeamA = savedInstanceState.getInt(SCORE_A);
-            numberBugsTeamB = savedInstanceState.getInt(SCORE_B);
-            savedMillisUntilFinished = savedInstanceState.getLong(MILLIS_UNTIL_FINISHED);
+            mNumberBugsTeamA = savedInstanceState.getInt(SCORE_A);
+            mNumberBugsTeamB = savedInstanceState.getInt(SCORE_B);
+            mSavedMillisUntilFinished = savedInstanceState.getLong(MILLIS_UNTIL_FINISHED);
         }
 
         // Initialize the countdown
-        countDownTimer = initCountDownTimer();
+        mCountDownTimer = initCountDownTimer();
         // Trick for displaying the count down
-        countDownTimer.onTick(savedMillisUntilFinished);
+        mCountDownTimer.onTick(mSavedMillisUntilFinished);
 
         refreshScoreTeamA();
         refreshScoreTeamB();
@@ -83,15 +83,15 @@ public class MainActivity extends AppCompatActivity {
      * @return the countDownTimer created
      */
     private CountDownTimer initCountDownTimer() {
-        // The savedMillisUntilFinished variable is used to restore the state
+        // The mSavedMillisUntilFinished variable is used to restore the state
         // and initialise the countdown with the right remaining time
-        return new CountDownTimer(savedMillisUntilFinished, TIMER_INTERVAL) {
+        return new CountDownTimer(mSavedMillisUntilFinished, TIMER_INTERVAL) {
 
             public void onTick(long millisUntilFinished) {
                 // Here the remaining time is saved
-                savedMillisUntilFinished = millisUntilFinished;
+                mSavedMillisUntilFinished = millisUntilFinished;
                 long minutes = millisUntilFinished / 1000 / 60;
-                timerTV.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes,
+                mTimerTV.setText(String.format(Locale.getDefault(), "%02d:%02d", minutes,
                         (millisUntilFinished - (minutes * 60 * 1000)) / 1000));
             }
 
@@ -105,38 +105,38 @@ public class MainActivity extends AppCompatActivity {
      * display the score for the team A
      */
     private void refreshScoreTeamA() {
-        scoreATV.setText(String.valueOf(numberBugsTeamA));
+        mScoreATV.setText(String.valueOf(mNumberBugsTeamA));
     }
 
     /**
      * display the score for the team B
      */
     private void refreshScoreTeamB() {
-        scoreBTV.setText(String.valueOf(numberBugsTeamB));
+        mScoreBTV.setText(String.valueOf(mNumberBugsTeamB));
     }
 
     /**
      * Display the result of the competition
      */
     private void displayWinner() {
-        String winner = (numberBugsTeamA < numberBugsTeamB) ?
+        String winner = (mNumberBugsTeamA < mNumberBugsTeamB) ?
                 getString(R.string.teamA) + " wins" :
-                (numberBugsTeamB < numberBugsTeamA) ? getString(R.string.teamB) + " wins" : getString(R.string.resultEgality);
-        timerTV.setText(winner);
+                (mNumberBugsTeamB < mNumberBugsTeamA) ? getString(R.string.teamB) + " wins" : getString(R.string.resultEgality);
+        mTimerTV.setText(winner);
     }
 
     /**
      * Check if a coder resolved all bugs and display the winner if necessary
      */
     private void checkResult() {
-        if (numberBugsTeamA == 0 || numberBugsTeamB == 0) {
+        if (mNumberBugsTeamA == 0 || mNumberBugsTeamB == 0) {
             // To reinit the countdown at the initial value
-            savedMillisUntilFinished = TIME_TO_CORRECT;
+            mSavedMillisUntilFinished = TIME_TO_CORRECT;
             // Stop the countdown
-            startPauseDebugging(startPauseB);
+            startPauseDebugging(mStartPauseB);
             displayWinner();
             // Disable the button, it's a mandatory to start a new program
-            startPauseB.setEnabled(false);
+            mStartPauseB.setEnabled(false);
         }
     }
 
@@ -147,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctSyntaxErrorTeamA(View view) {
         // To avoid the score to go under 0
-        if (started && numberBugsTeamA > 0) {
-            numberBugsTeamA--;
+        if (mStarted && mNumberBugsTeamA > 0) {
+            mNumberBugsTeamA--;
             refreshScoreTeamA();
             checkResult();
         }
@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctLogicErrorTeamA(View view) {
         // To avoid the score to go under 0
-        if (started && numberBugsTeamA > 2) {
-            numberBugsTeamA -= 3;
+        if (mStarted && mNumberBugsTeamA > 2) {
+            mNumberBugsTeamA -= 3;
             refreshScoreTeamA();
             checkResult();
         }
@@ -174,8 +174,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view the calling button
      */
     public void virusAttackTeamA(View view) {
-        if (started) {
-            numberBugsTeamB += 5;
+        if (mStarted) {
+            mNumberBugsTeamB += 5;
             refreshScoreTeamB();
         }
     }
@@ -187,8 +187,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctSyntaxErrorTeamB(View view) {
         // To avoid the score to go under 0
-        if (started && numberBugsTeamB > 0) {
-            numberBugsTeamB--;
+        if (mStarted && mNumberBugsTeamB > 0) {
+            mNumberBugsTeamB--;
             refreshScoreTeamB();
             checkResult();
         }
@@ -201,8 +201,8 @@ public class MainActivity extends AppCompatActivity {
      */
     public void correctLogicErrorTeamB(View view) {
         // To avoid the score to go under 0
-        if (started && numberBugsTeamB > 2) {
-            numberBugsTeamB -= 3;
+        if (mStarted && mNumberBugsTeamB > 2) {
+            mNumberBugsTeamB -= 3;
             refreshScoreTeamB();
             checkResult();
         }
@@ -214,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view the calling button
      */
     public void virusAttackTeamB(View view) {
-        if (started) {
-            numberBugsTeamA += 5;
+        if (mStarted) {
+            mNumberBugsTeamA += 5;
             refreshScoreTeamA();
         }
     }
@@ -229,15 +229,15 @@ public class MainActivity extends AppCompatActivity {
         Button startPauseButton = (Button) view;
 
         // If not started, the countdown starts and button label change
-        if (!started) {
-            countDownTimer = initCountDownTimer();
-            countDownTimer.start();
+        if (!mStarted) {
+            mCountDownTimer = initCountDownTimer();
+            mCountDownTimer.start();
             startPauseButton.setText(R.string.pause);
         } else { // if started, the countdown stops and button label change
-            countDownTimer.cancel();
+            mCountDownTimer.cancel();
             startPauseButton.setText(R.string.start);
         }
-        started = !started;
+        mStarted = !mStarted;
     }
 
     /**
@@ -247,21 +247,21 @@ public class MainActivity extends AppCompatActivity {
      */
     public void startNewProgram(View view) {
         // Reinit the score of both teams
-        numberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
-        numberBugsTeamB = NUMBER_BUGS_AT_BEGINING;
+        mNumberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
+        mNumberBugsTeamB = NUMBER_BUGS_AT_BEGINING;
         refreshScoreTeamA();
         refreshScoreTeamB();
 
         // Reinit the timer
-        countDownTimer.cancel();
+        mCountDownTimer.cancel();
         // Trick to refresh the display
-        countDownTimer.onTick(TIME_TO_CORRECT);
-        started = false;
+        mCountDownTimer.onTick(TIME_TO_CORRECT);
+        mStarted = false;
 
         // Change the label of the button
-        startPauseB.setText(R.string.start);
+        mStartPauseB.setText(R.string.start);
         // Enable the button in case it was disable
-        startPauseB.setEnabled(true);
+        mStartPauseB.setEnabled(true);
     }
 
     /**
@@ -273,12 +273,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt(SCORE_A, numberBugsTeamA);
-        outState.putInt(SCORE_B, numberBugsTeamB);
-        outState.putLong(MILLIS_UNTIL_FINISHED, savedMillisUntilFinished);
+        outState.putInt(SCORE_A, mNumberBugsTeamA);
+        outState.putInt(SCORE_B, mNumberBugsTeamB);
+        outState.putLong(MILLIS_UNTIL_FINISHED, mSavedMillisUntilFinished);
 
         // Pause the timer
-        countDownTimer.cancel();
+        mCountDownTimer.cancel();
     }
 
 }
