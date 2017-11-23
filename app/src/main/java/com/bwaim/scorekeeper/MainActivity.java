@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private CountDownTimer countDownTimer;
 
     // The save of the millis until the countDown finish
-    private long savedMillisUntilFinished;
+    private long savedMillisUntilFinished = TIME_TO_CORRECT;
 
     // boolean to know if the debugging session is started
     private boolean started = false;
@@ -61,11 +61,20 @@ public class MainActivity extends AppCompatActivity {
         scoreBTV = findViewById(R.id.scoreTeamB);
         startPauseB = findViewById(R.id.startPauseButton);
 
+        // Restore the state if it's not the first launch
+        if (savedInstanceState != null) {
+            numberBugsTeamA = savedInstanceState.getInt(SCORE_A);
+            numberBugsTeamB = savedInstanceState.getInt(SCORE_B);
+            savedMillisUntilFinished = savedInstanceState.getLong(MILLIS_UNTIL_FINISHED);
+        }
+
         // Initialize the countdown
-        savedMillisUntilFinished = TIME_TO_CORRECT;
         countDownTimer = initCountDownTimer();
         // Trick for displaying the count down
-        countDownTimer.onTick(TIME_TO_CORRECT);
+        countDownTimer.onTick(savedMillisUntilFinished);
+
+        refreshScoreTeamA();
+        refreshScoreTeamB();
     }
 
     /**
@@ -272,24 +281,4 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer.cancel();
     }
 
-    /**
-     * restore the state of the instance
-     *
-     * @param savedInstanceState the bundle to restore the state
-     */
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        numberBugsTeamA = savedInstanceState.getInt(SCORE_A);
-        numberBugsTeamB = savedInstanceState.getInt(SCORE_B);
-        savedMillisUntilFinished = savedInstanceState.getLong(MILLIS_UNTIL_FINISHED);
-
-        refreshScoreTeamA();
-        refreshScoreTeamB();
-
-        countDownTimer = initCountDownTimer();
-        // Trick to refresh the display of the countdown
-        countDownTimer.onTick(savedMillisUntilFinished);
-    }
 }
