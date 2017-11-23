@@ -26,6 +26,15 @@ public class MainActivity extends AppCompatActivity {
     // The TextView of the timer
     private TextView timerTV;
 
+    // The TextView of the team A score
+    private TextView scoreATV;
+
+    // The TextView of the team B score
+    private TextView scoreBTV;
+
+    // The startPauseButton
+    private Button startPauseB;
+
     // current number of bugs of the team A
     private int numberBugsTeamA = NUMBER_BUGS_AT_BEGINING;
 
@@ -46,8 +55,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Get the TextView of the timer
+        // Get the TextView of the timer, the score for team A and B, the start - pause button
         timerTV = findViewById(R.id.timer);
+        scoreATV = findViewById(R.id.scoreTeamA);
+        scoreBTV = findViewById(R.id.scoreTeamB);
+        startPauseB = findViewById(R.id.startPauseButton);
 
         // Initialize the countdown
         savedMillisUntilFinished = TIME_TO_CORRECT;
@@ -84,16 +96,14 @@ public class MainActivity extends AppCompatActivity {
      * display the score for the team A
      */
     private void refreshScoreTeamA() {
-        TextView scoreTV = findViewById(R.id.scoreTeamA);
-        scoreTV.setText(String.valueOf(numberBugsTeamA));
+        scoreATV.setText(String.valueOf(numberBugsTeamA));
     }
 
     /**
      * display the score for the team B
      */
     private void refreshScoreTeamB() {
-        TextView scoreTV = findViewById(R.id.scoreTeamB);
-        scoreTV.setText(String.valueOf(numberBugsTeamB));
+        scoreBTV.setText(String.valueOf(numberBugsTeamB));
     }
 
     /**
@@ -113,12 +123,11 @@ public class MainActivity extends AppCompatActivity {
         if (numberBugsTeamA == 0 || numberBugsTeamB == 0) {
             // To reinit the countdown at the initial value
             savedMillisUntilFinished = TIME_TO_CORRECT;
-            Button startPauseButton = findViewById(R.id.startPauseButton);
             // Stop the countdown
-            startPauseDebugging(startPauseButton);
+            startPauseDebugging(startPauseB);
             displayWinner();
             // Disable the button, it's a mandatory to start a new program
-            startPauseButton.setEnabled(false);
+            startPauseB.setEnabled(false);
         }
     }
 
@@ -241,10 +250,9 @@ public class MainActivity extends AppCompatActivity {
         started = false;
 
         // Change the label of the button
-        Button startPauseButton = findViewById(R.id.startPauseButton);
-        startPauseButton.setText(R.string.start);
+        startPauseB.setText(R.string.start);
         // Enable the button in case it was disable
-        startPauseButton.setEnabled(true);
+        startPauseB.setEnabled(true);
     }
 
     /**
