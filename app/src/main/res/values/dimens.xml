@@ -22,4 +22,5 @@
     <dimen name="buttonMargin">20dp</dimen>
     <dimen name="layoutMargin">18dp</dimen>
     <dimen name="separatorSize">2dp</dimen>
+    <dimen name="zero">0dp</dimen>
 </resources>
