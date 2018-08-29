@@ -22,12 +22,12 @@ package com.bwaim.scorekeeper;
  */
 public class ConfigurationModel {
 
-    // Players informations
+    // Players information
     private String nameA;
     private String nameB;
     private int initialScore;
 
-    // Game informations
+    // Game information
     private int syntaxError;
     private int logicError;
     private int virusAttack;
