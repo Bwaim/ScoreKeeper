@@ -14,13 +14,13 @@
  *    limitations under the License.
  */
 
-package com.bwaim.scorekeeper;
+package com.bwaim.scorekeeper.data;
 
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
-public class ConfigurationModel {
+public class Configuration {
 
     // Players information
     private String nameA;
