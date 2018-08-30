@@ -30,15 +30,17 @@ public class ConfigurationRepository implements ConfigurationDataSource {
 
     private volatile static ConfigurationRepository INSTANCE = null;
 
-    private ConfigurationRepository() {
+    Configuration mConfiguration;
 
+    private ConfigurationRepository(Configuration config) {
+        mConfiguration = config;
     }
 
-    public static ConfigurationRepository getInstance() {
+    public static ConfigurationRepository getInstance(Configuration config) {
         if (INSTANCE == null) {
             synchronized (ConfigurationRepository.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ConfigurationRepository();
+                    INSTANCE = new ConfigurationRepository(config);
                 }
             }
         }
@@ -53,6 +55,6 @@ public class ConfigurationRepository implements ConfigurationDataSource {
     public void getConfiguration(@NonNull final LoadConfigurationCallback callback) {
         checkNotNull(callback);
 
-        callback.onConfigurationLoaded(new Configuration());
+        callback.onConfigurationLoaded(mConfiguration);
     }
 }
