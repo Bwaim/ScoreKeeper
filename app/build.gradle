@@ -40,6 +40,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation "com.google.guava:guava:$guavaVersion"
+
     implementation "com.android.support:appcompat-v7:$support_library"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
     testImplementation "junit:junit:$junit_version"
