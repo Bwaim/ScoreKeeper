@@ -26,7 +26,7 @@ import com.bwaim.scorekeeper.data.Configuration;
  */
 public interface ConfigurationDataSource {
 
-    void getConfiguraton(@NonNull LoadConfigurationCallback callback);
+    void getConfiguration(@NonNull LoadConfigurationCallback callback);
 
     interface LoadConfigurationCallback {
 
