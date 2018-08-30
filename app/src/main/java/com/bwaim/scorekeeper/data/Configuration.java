@@ -33,6 +33,27 @@ public class Configuration {
     private int virusAttack;
     private int initialTime;
 
+    public Configuration() {
+        nameA = "Coder A";
+        nameB = "Coder B";
+        initialScore = 25;
+        syntaxError = 1;
+        logicError = 3;
+        virusAttack = 5;
+        initialTime = 90;
+    }
+
+    public Configuration(String nameA, String nameB, int initialScore, int syntaxError
+            , int logicError, int virusAttack, int initialTime) {
+        this.nameA = nameA;
+        this.nameB = nameB;
+        this.initialScore = initialScore;
+        this.syntaxError = syntaxError;
+        this.logicError = logicError;
+        this.virusAttack = virusAttack;
+        this.initialTime = initialTime;
+    }
+
     public String getNameA() {
         return nameA;
     }
