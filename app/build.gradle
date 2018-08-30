@@ -41,11 +41,18 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation "com.google.guava:guava:$guavaVersion"
-
+    // App's dependencies
     implementation "com.android.support:appcompat-v7:$support_library"
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
+    implementation "com.google.guava:guava:$guavaVersion"
+
+    // Dependencies for local unit tests
     testImplementation "junit:junit:$junit_version"
+    testImplementation "org.mockito:mockito-all:$mockitoVersion"
+
+    // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:$test_runner"
+
+    // Espresso UI Testing
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core"
 }
