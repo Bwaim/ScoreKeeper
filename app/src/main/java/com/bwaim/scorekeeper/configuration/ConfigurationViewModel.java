@@ -28,13 +28,15 @@ import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
  */
 public class ConfigurationViewModel extends ViewModel {
     private final ConfigurationRepository mConfigurationRepository;
-    private MutableLiveData<Configuration> mConfigurationLiveData = new MutableLiveData<>();
+    public final MutableLiveData<Configuration> mConfigurationLiveData = new MutableLiveData<>();
 
-    public ConfigurationViewModel(ConfigurationRepository repository) {
+    ConfigurationViewModel(ConfigurationRepository repository) {
         mConfigurationRepository = repository;
 
-        mConfigurationRepository.getConfiguration((Configuration config) ->
-                mConfigurationLiveData.setValue(config)
-        );
+        loadConfiguration();
+    }
+
+    private void loadConfiguration() {
+        mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
     }
 }
