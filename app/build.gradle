@@ -49,6 +49,7 @@ dependencies {
     // Dependencies for local unit tests
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-all:$mockitoVersion"
+    testImplementation "android.arch.core:core-testing:$archLifecycleVersion"
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:$test_runner"
