@@ -14,16 +14,16 @@
  *    limitations under the License.
  */
 
-package com.bwaim.scorekeeper;
+package com.bwaim.scorekeeper.configuration;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
-import com.bwaim.scorekeeper.configuration.ConfigurationViewModel;
+import com.bwaim.scorekeeper.R;
 
-public class score_act extends AppCompatActivity {
+public class scoreActivity extends AppCompatActivity {
 
     private ConfigurationViewModel mConfigurationViewModel;
 
