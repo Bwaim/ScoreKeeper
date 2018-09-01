@@ -13,23 +13,12 @@
   ~    See the License for the specific language governing permissions and
   ~    limitations under the License.
   -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.bwaim.scorekeeper">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".score_act">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentFrame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".score_act">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
-
-</manifest>
+</FrameLayout>
