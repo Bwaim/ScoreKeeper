@@ -34,7 +34,7 @@ public class Configuration {
     private int initialTime;
 
     public Configuration() {
-        nameA = "Coder A";
+        nameA = "Toto";
         nameB = "Coder B";
         initialScore = 25;
         syntaxError = 1;
