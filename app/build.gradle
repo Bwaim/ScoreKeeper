@@ -36,6 +36,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    // Always show the result of every unit test, even if it passes.
+    testOptions.unitTests.all {
+        testLogging {
+            events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -51,8 +62,6 @@ dependencies {
     annotationProcessor "android.arch.lifecycle:compiler:$archLifecycleVersion"
 
     // Dependencies for local unit tests
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    implementation 'com.android.support:support-v4:27.1.1'
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-all:$mockitoVersion"
     testImplementation "android.arch.core:core-testing:$archLifecycleVersion"
