@@ -30,9 +30,13 @@ public class ConfigurationViewModel extends ViewModel {
     private final ConfigurationRepository mConfigurationRepository;
     public final MutableLiveData<Configuration> mConfigurationLiveData = new MutableLiveData<>();
 
-    ConfigurationViewModel(ConfigurationRepository repository) {
+    public ConfigurationViewModel(ConfigurationRepository repository) {
         mConfigurationRepository = repository;
 
+        loadConfiguration();
+    }
+
+    public void start() {
         loadConfiguration();
     }
 
