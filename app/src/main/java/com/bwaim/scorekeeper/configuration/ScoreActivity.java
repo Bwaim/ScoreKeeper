@@ -22,13 +22,18 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bwaim.scorekeeper.R;
+import com.bwaim.scorekeeper.ViewModelFactory;
+import com.bwaim.scorekeeper.util.ActivityUtils;
 
-public class scoreActivity extends AppCompatActivity {
+public class ScoreActivity extends AppCompatActivity {
 
     private ConfigurationViewModel mConfigurationViewModel;
 
     public static ConfigurationViewModel obtainViewModel(FragmentActivity activity) {
-        return ViewModelProviders.of(activity).get(ConfigurationViewModel.class);
+        // Use a Factory to inject dependencies into the ViewModel
+        ViewModelFactory factory = ViewModelFactory.getInstance();
+
+        return ViewModelProviders.of(activity, factory).get(ConfigurationViewModel.class);
     }
 
     @Override
@@ -36,6 +41,19 @@ public class scoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.score_act);
 
+        setupViewFragment();
+
         mConfigurationViewModel = obtainViewModel(this);
+    }
+
+    private void setupViewFragment() {
+        ScoreFragment scoreFragment =
+                (ScoreFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+        if (scoreFragment == null) {
+            // Create the fragment
+            scoreFragment = ScoreFragment.newInstance();
+            ActivityUtils.replaceFragmentInActivity(
+                    getSupportFragmentManager(), scoreFragment, R.id.contentFrame);
+        }
     }
 }
