@@ -31,7 +31,7 @@ public class Configuration {
     private int syntaxError;
     private int logicError;
     private int virusAttack;
-    private int initialTime;
+    private long initialTime;
 
     public Configuration() {
         nameA = "Toto";
@@ -40,7 +40,7 @@ public class Configuration {
         syntaxError = 1;
         logicError = 3;
         virusAttack = 5;
-        initialTime = 90;
+        initialTime = 90000;
     }
 
     public Configuration(String nameA, String nameB, int initialScore, int syntaxError
@@ -102,11 +102,11 @@ public class Configuration {
         this.virusAttack = virusAttack;
     }
 
-    public int getInitialTime() {
+    public long getInitialTime() {
         return initialTime;
     }
 
-    public void setInitialTime(int initialTime) {
+    public void setInitialTime(long initialTime) {
         this.initialTime = initialTime;
     }
 }
