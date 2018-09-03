@@ -22,13 +22,22 @@ import android.arch.lifecycle.ViewModel;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
 public class ConfigurationViewModel extends ViewModel {
+
     private final ConfigurationRepository mConfigurationRepository;
+
     public final MutableLiveData<Configuration> mConfigurationLiveData = new MutableLiveData<>();
+
+    public final MutableLiveData<String> mTime = new MutableLiveData<>();
 
     public ConfigurationViewModel(ConfigurationRepository repository) {
         mConfigurationRepository = repository;
@@ -42,5 +51,11 @@ public class ConfigurationViewModel extends ViewModel {
 
     private void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
+        checkNotNull(mConfigurationLiveData.getValue());
+        Long initialTime = mConfigurationLiveData.getValue().getInitialTime();
+        mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(initialTime),
+                TimeUnit.MILLISECONDS.toSeconds(initialTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
     }
 }

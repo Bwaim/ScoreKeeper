@@ -57,7 +57,8 @@
                     style="@style/teamStyle.Score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/beginScore" />
+                    android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
+                    tools:text="@string/beginScore" />
 
                 <Button
                     style="@style/buttonStyle"
@@ -95,14 +96,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="@string/teamB" />
+                    android:text="@{viewModel.mConfigurationLiveData.nameB}"
+                    tools:text="@string/teamB" />
 
                 <TextView
                     android:id="@+id/scoreTeamB"
                     style="@style/teamStyle.Score"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/beginScore" />
+                    android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
+                    tools:text="@string/beginScore" />
 
                 <Button
                     style="@style/buttonStyle"
@@ -134,7 +137,8 @@
             android:layout_below="@id/teamsLayout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/layoutMargin"
-            android:text="@string/timerStart" />
+            android:text="@{viewModel.mTime}"
+            tools:text="@string/timerStart" />
 
         <LinearLayout
             android:layout_width="match_parent"
