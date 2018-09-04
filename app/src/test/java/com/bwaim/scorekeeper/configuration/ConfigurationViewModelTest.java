@@ -30,6 +30,7 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.verify;
 
@@ -45,7 +46,9 @@ public class ConfigurationViewModelTest {
     private final static int SYNTAX_ERROR = 1;
     private final static int LOGIC_ERROR = 3;
     private final static int VIRUS_ATTACK = 5;
-    private final static int INITIAL_TIME = 60;
+    private final static int INITIAL_TIME = 60000;
+
+    private final static String EXPECTED_TIME = "01:00";
 
     private static Configuration CONFIG = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
             , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
@@ -67,14 +70,21 @@ public class ConfigurationViewModelTest {
         MockitoAnnotations.initMocks(this);
 
         mConfigurationViewModel = new ConfigurationViewModel(mConfigurationRepository);
+
+        verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
+
+        mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(CONFIG);
     }
 
     @Test
     public void loadConfigurationFromRepository_dataLoaded() {
-        verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
-
-        mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(CONFIG);
-
         assertSame(CONFIG, mConfigurationViewModel.mConfigurationLiveData.getValue());
+    }
+
+    @Test
+    public void updateTime_updated() {
+        mConfigurationViewModel.updateTime();
+
+        assertEquals(EXPECTED_TIME, mConfigurationViewModel.mTime.getValue());
     }
 }
