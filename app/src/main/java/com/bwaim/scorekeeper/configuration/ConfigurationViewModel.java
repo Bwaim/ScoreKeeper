@@ -18,14 +18,13 @@ package com.bwaim.scorekeeper.configuration;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.support.annotation.VisibleForTesting;
 
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
@@ -51,11 +50,17 @@ public class ConfigurationViewModel extends ViewModel {
 
     private void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
-        checkNotNull(mConfigurationLiveData.getValue());
-        Long initialTime = mConfigurationLiveData.getValue().getInitialTime();
-        mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(initialTime),
-                TimeUnit.MILLISECONDS.toSeconds(initialTime) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
+        updateTime();
+    }
+
+    @VisibleForTesting
+    public void updateTime() {
+        if (mConfigurationLiveData.getValue() != null) {
+            Long initialTime = mConfigurationLiveData.getValue().getInitialTime();
+            mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(initialTime),
+                    TimeUnit.MILLISECONDS.toSeconds(initialTime) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
+        }
     }
 }
