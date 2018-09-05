@@ -68,7 +68,11 @@ dependencies {
 
     // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:$test_runner"
+    androidTestImplementation "com.android.support.test:rules:$rulesVersion"
 
     // Espresso UI Testing
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_core"
+
+    // Resolve conflicts between main and test APK:
+    implementation "com.google.code.findbugs:jsr305:3.0.0"
 }

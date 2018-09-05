@@ -37,6 +37,7 @@ buildscript {
         junit_version = '4.12'
         mockitoVersion = '1.10.19'
         test_runner = '1.0.2'
+        rulesVersion = '1.0.2'
         espresso_core = '3.0.2'
     }
     

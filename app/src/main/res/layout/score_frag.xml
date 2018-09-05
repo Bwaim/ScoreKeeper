@@ -46,6 +46,7 @@
 
                 <TextView
                     style="@style/teamStyle"
+                    android:id="@+id/teamA"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -93,6 +94,7 @@
 
                 <TextView
                     style="@style/teamStyle"
+                    android:id="@+id/teamB"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
