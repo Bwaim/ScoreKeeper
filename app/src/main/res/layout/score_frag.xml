@@ -15,6 +15,7 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".configuration.ScoreFragment">
 
@@ -25,149 +26,215 @@
             type="com.bwaim.scorekeeper.configuration.ConfigurationViewModel" />
     </data>
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient">
 
-        <LinearLayout
-            android:id="@+id/teamsLayout"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/teamA"
+            style="@style/teamStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/layoutMargin"
-            android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@{viewModel.mConfigurationLiveData.nameA}"
+            app:layout_constraintEnd_toStartOf="@+id/separation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/teamA" />
 
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/scoreTeamA"
+            style="@style/teamStyle.Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
+            app:layout_constraintEnd_toStartOf="@+id/separation"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/teamA"
+            tools:text="@string/beginScore" />
 
-                <TextView
-                    style="@style/teamStyle"
-                    android:id="@+id/teamA"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@{viewModel.mConfigurationLiveData.nameA}"
-                    tools:text="@string/teamA" />
+        <Button
+            android:id="@+id/syntaxErrorA"
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error1"
+            app:layout_constraintEnd_toStartOf="@+id/separation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scoreTeamA" />
 
-                <TextView
-                    android:id="@+id/scoreTeamA"
-                    style="@style/teamStyle.Score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
-                    tools:text="@string/beginScore" />
+        <Button
+            android:id="@+id/logicErrorA"
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error2"
+            app:layout_constraintEnd_toStartOf="@+id/separation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/syntaxErrorA" />
 
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error1" />
+        <Button
+            android:id="@+id/virusAttackA"
+            style="@style/buttonStyle"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error3"
+            app:layout_constraintEnd_toStartOf="@+id/separation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logicErrorA" />
 
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error2" />
+        <View
+            android:id="@+id/separation"
+            android:layout_width="@dimen/separatorSize"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="@+id/virusAttackA"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error3" />
+        <TextView
+            android:id="@+id/teamB"
+            style="@style/teamStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@{viewModel.mConfigurationLiveData.nameB}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/separation"
+            tools:text="@string/teamB" />
 
-            </LinearLayout>
+        <TextView
+            android:id="@+id/scoreTeamB"
+            style="@style/teamStyle.Score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/separation"
+            app:layout_constraintTop_toBottomOf="@+id/teamB"
+            tools:text="@string/beginScore" />
 
-            <View
-                android:layout_width="@dimen/separatorSize"
-                android:layout_height="match_parent"
-                android:background="@color/colorAccent" />
+        <Button
+            android:id="@+id/syntaxErrorB"
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/separation"
+            app:layout_constraintTop_toBottomOf="@+id/scoreTeamB" />
 
-            <LinearLayout
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <Button
+            android:id="@+id/logicErrorB"
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/separation"
+            app:layout_constraintTop_toBottomOf="@+id/syntaxErrorB" />
 
-                <TextView
-                    style="@style/teamStyle"
-                    android:id="@+id/teamB"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@{viewModel.mConfigurationLiveData.nameB}"
-                    tools:text="@string/teamB" />
-
-                <TextView
-                    android:id="@+id/scoreTeamB"
-                    style="@style/teamStyle.Score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{String.valueOf(viewModel.mConfigurationLiveData.initialScore)}"
-                    tools:text="@string/beginScore" />
-
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error1" />
-
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error2" />
-
-                <Button
-                    style="@style/buttonStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/error3" />
-
-            </LinearLayout>
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/virusAttackB"
+            style="@style/buttonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="@string/error3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/separation"
+            app:layout_constraintTop_toBottomOf="@+id/logicErrorB" />
 
         <TextView
             android:id="@+id/timer"
             style="@style/teamStyle.Timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/teamsLayout"
-            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="@dimen/layoutMargin"
             android:text="@{viewModel.mTime}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/virusAttackA"
             tools:text="@string/timerStart" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/timer"
-            android:layout_centerHorizontal="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <Button
+            android:id="@+id/startPauseButton"
+            style="@style/buttonStyle"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/buttonMargin"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/layoutMargin"
+            android:text="@string/start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/newProgram"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/timer" />
 
-            <Button
-                android:id="@+id/startPauseButton"
-                style="@style/buttonStyle"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/start" />
+        <Button
+            android:id="@+id/newProgram"
+            style="@style/buttonStyle"
+            android:layout_width="@dimen/zero"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/buttonMargin"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/layoutMargin"
+            android:text="@string/reset"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/startPauseButton"
+            app:layout_constraintTop_toBottomOf="@+id/timer" />
 
-            <Button
-                style="@style/buttonStyle"
-                android:layout_width="@dimen/zero"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/reset" />
-
-        </LinearLayout>
-
-    </RelativeLayout>
-
-
+    </android.support.constraint.ConstraintLayout>
 </layout>
