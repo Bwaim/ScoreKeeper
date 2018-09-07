@@ -29,7 +29,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient">
+        tools:background="@drawable/gradient">
 
         <TextView
             android:id="@+id/teamA"
@@ -183,58 +183,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/separation"
             app:layout_constraintTop_toBottomOf="@+id/logicErrorB" />
-
-        <TextView
-            android:id="@+id/timer"
-            style="@style/teamStyle.Timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/layoutMargin"
-            android:text="@{viewModel.mTime}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/virusAttackA"
-            tools:text="@string/timerStart" />
-
-        <Button
-            android:id="@+id/startPauseButton"
-            style="@style/buttonStyle"
-            android:layout_width="@dimen/zero"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/buttonMargin"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/layoutMargin"
-            android:text="@string/start"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/newProgram"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timer" />
-
-        <Button
-            android:id="@+id/newProgram"
-            style="@style/buttonStyle"
-            android:layout_width="@dimen/zero"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/buttonMargin"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="@dimen/layoutMargin"
-            android:text="@string/reset"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/startPauseButton"
-            app:layout_constraintTop_toBottomOf="@+id/timer" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -16,21 +16,25 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentFrame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
-    android:orientation="vertical">
+    android:baselineAligned="false"
+    android:orientation="horizontal">
 
     <FrameLayout
         android:id="@+id/contentScoreFrame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/zero"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         tools:layout="@layout/score_frag" />
 
     <FrameLayout
         android:id="@+id/contentTimerFrame"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/zero"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         tools:layout="@layout/timer_frag" />
 
 </LinearLayout>

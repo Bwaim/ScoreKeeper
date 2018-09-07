@@ -48,12 +48,21 @@ public class ScoreActivity extends AppCompatActivity {
 
     private void setupViewFragment() {
         ScoreFragment scoreFragment =
-                (ScoreFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
+                (ScoreFragment) getSupportFragmentManager().findFragmentById(R.id.contentScoreFrame);
         if (scoreFragment == null) {
             // Create the fragment
             scoreFragment = ScoreFragment.newInstance();
             ActivityUtils.replaceFragmentInActivity(
-                    getSupportFragmentManager(), scoreFragment, R.id.contentFrame);
+                    getSupportFragmentManager(), scoreFragment, R.id.contentScoreFrame);
+        }
+
+        TimerFragment timerFragment =
+                (TimerFragment) getSupportFragmentManager().findFragmentById(R.id.contentTimerFrame);
+        if (timerFragment == null) {
+            // Create the fragment
+            timerFragment = TimerFragment.newInstance();
+            ActivityUtils.replaceFragmentInActivity(
+                    getSupportFragmentManager(), timerFragment, R.id.contentTimerFrame);
         }
     }
 }
