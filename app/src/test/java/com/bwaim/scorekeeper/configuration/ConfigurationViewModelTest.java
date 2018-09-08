@@ -21,7 +21,9 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationDataSource.LoadConfigurationCallback;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
+import com.bwaim.scorekeeper.mock.MockTimer;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -30,8 +32,12 @@ import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.text.SimpleDateFormat;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 
 /**
@@ -50,8 +56,7 @@ public class ConfigurationViewModelTest {
 
     private final static String EXPECTED_TIME = "01:00";
 
-    private static Configuration CONFIG = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
-            , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
+    private Configuration config;
 
     // Executes each task synchronously using Architecture Components.
     @Rule
@@ -65,20 +70,46 @@ public class ConfigurationViewModelTest {
 
     private ConfigurationViewModel mConfigurationViewModel;
 
+    private MockTimer mockTimer;
+
     @Before
     public void setupConfigurationViewModel() {
         MockitoAnnotations.initMocks(this);
 
-        mConfigurationViewModel = new ConfigurationViewModel(mConfigurationRepository);
+        config = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
+                , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
+        mockTimer = new MockTimer(INITIAL_TIME);
+
+        mConfigurationViewModel = new ConfigurationViewModel(mConfigurationRepository, mockTimer);
 
         verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
+        mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(config);
+        mConfigurationViewModel.loadConfiguration();
+    }
 
-        mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(CONFIG);
+    @After
+    public void deleteInstance() {
+        mConfigurationViewModel = null;
     }
 
     @Test
     public void loadConfigurationFromRepository_dataLoaded() {
-        assertSame(CONFIG, mConfigurationViewModel.mConfigurationLiveData.getValue());
+        assertSame(config, mConfigurationViewModel.mConfigurationLiveData.getValue());
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        assertEquals(config.getNameA()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getNameA());
+        assertEquals(config.getNameB()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getNameB());
+        assertEquals(config.getInitialScore()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getInitialScore());
+        assertEquals(config.getInitialTime()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getInitialTime());
+        assertEquals(config.getSyntaxError()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getSyntaxError());
+        assertEquals(config.getLogicError()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getLogicError());
+        assertEquals(config.getVirusAttack()
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getVirusAttack());
     }
 
     @Test
@@ -86,5 +117,22 @@ public class ConfigurationViewModelTest {
         mConfigurationViewModel.updateTime();
 
         assertEquals(EXPECTED_TIME, mConfigurationViewModel.mTime.getValue());
+    }
+
+    @Test
+    public void startTimer_TimeChange() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        mConfigurationViewModel.updateTime();
+        mConfigurationViewModel.startTimer();
+
+        mockTimer.simulateOnTick();
+        String time1 = mConfigurationViewModel.mTime.getValue();
+        long time1inMillis = sdf.parse(time1).getTime();
+        mockTimer.simulateOnTick();
+        String time2 = mConfigurationViewModel.mTime.getValue();
+        long time2inMillis = sdf.parse(time2).getTime();
+
+        assertTrue(time1inMillis > time2inMillis);
     }
 }
