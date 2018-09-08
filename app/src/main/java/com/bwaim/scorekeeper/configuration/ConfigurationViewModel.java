@@ -26,11 +26,15 @@ import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
 public class ConfigurationViewModel extends ViewModel {
+
+    public final long TIMER_INTERVAL = 1000;
 
     private final ConfigurationRepository mConfigurationRepository;
 
@@ -38,9 +42,12 @@ public class ConfigurationViewModel extends ViewModel {
 
     public final MutableLiveData<String> mTime = new MutableLiveData<>();
 
-    public ConfigurationViewModel(ConfigurationRepository repository) {
-        mConfigurationRepository = repository;
+    private MyCountDownTimer mCountDownTimer;
 
+    public ConfigurationViewModel(ConfigurationRepository repository
+            , MyCountDownTimer countDownTimer) {
+        mConfigurationRepository = repository;
+        mCountDownTimer = countDownTimer;
         loadConfiguration();
     }
 
@@ -48,19 +55,42 @@ public class ConfigurationViewModel extends ViewModel {
         loadConfiguration();
     }
 
-    private void loadConfiguration() {
+    @VisibleForTesting
+    public void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
-        updateTime();
+        if (mConfigurationLiveData.getValue() != null) {
+            updateTime();
+            mCountDownTimer.attach(this);
+        }
     }
 
     @VisibleForTesting
     public void updateTime() {
-        if (mConfigurationLiveData.getValue() != null) {
-            Long initialTime = mConfigurationLiveData.getValue().getInitialTime();
-            mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
-                    TimeUnit.MILLISECONDS.toMinutes(initialTime),
-                    TimeUnit.MILLISECONDS.toSeconds(initialTime) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
-        }
+        Long initialTime = getTime();
+        mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
+                TimeUnit.MILLISECONDS.toMinutes(initialTime),
+                TimeUnit.MILLISECONDS.toSeconds(initialTime) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
+    }
+
+    public void startTimer() {
+        mCountDownTimer.start();
+    }
+
+    public long getTime() {
+        checkNotNull(mConfigurationLiveData.getValue());
+        return mConfigurationLiveData.getValue().getInitialTime();
+    }
+
+    public void setTime(long newTime) {
+        checkNotNull(mConfigurationLiveData.getValue());
+        mConfigurationLiveData.getValue().setInitialTime(newTime);
+        updateTime();
+    }
+
+    public interface MyCountDownTimer {
+        void attach(ConfigurationViewModel configurationViewModel);
+
+        void start();
     }
 }

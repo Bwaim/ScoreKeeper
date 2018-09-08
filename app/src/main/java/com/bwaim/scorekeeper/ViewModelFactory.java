@@ -21,6 +21,7 @@ import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import com.bwaim.scorekeeper.configuration.ConfigurationViewModel;
+import com.bwaim.scorekeeper.configuration.DefaultTimer;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
 /**
@@ -59,7 +60,7 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ConfigurationViewModel.class)) {
             //noinspection unchecked
-            return (T) new ConfigurationViewModel(mConfigurationRepository);
+            return (T) new ConfigurationViewModel(mConfigurationRepository, new DefaultTimer());
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
