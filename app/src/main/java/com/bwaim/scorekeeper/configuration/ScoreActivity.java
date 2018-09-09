@@ -20,6 +20,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.ViewModelFactory;
@@ -64,5 +65,9 @@ public class ScoreActivity extends AppCompatActivity {
             ActivityUtils.replaceFragmentInActivity(
                     getSupportFragmentManager(), timerFragment, R.id.contentTimerFrame);
         }
+    }
+
+    public void startPauseDebugging(View view) {
+        mConfigurationViewModel.startTimer();
     }
 }
