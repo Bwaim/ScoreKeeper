@@ -48,12 +48,19 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private MyCountDownTimer mCountDownTimer;
 
+    private boolean isStarted;
+
     public ConfigurationViewModel(Application app, ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
         super(app);
         mConfigurationRepository = repository;
         mCountDownTimer = countDownTimer;
         loadConfiguration();
+        init();
+    }
+
+    private void init() {
+        isStarted = false;
         startPauseButtonLabel.setValue(getApplication().getString(R.string.start));
     }
 
@@ -80,8 +87,15 @@ public class ConfigurationViewModel extends AndroidViewModel {
     }
 
     public void startTimer() {
-        mCountDownTimer.start();
-        startPauseButtonLabel.setValue(getApplication().getString(R.string.pause));
+
+        isStarted = !isStarted;
+        if (isStarted) {
+            mCountDownTimer.start();
+        } else {
+            mCountDownTimer.pause();
+        }
+        startPauseButtonLabel.setValue(isStarted ? getApplication().getString(R.string.pause)
+                : getApplication().getString(R.string.start));
     }
 
     public long getTime() {
@@ -99,5 +113,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
         void attach(ConfigurationViewModel configurationViewModel);
 
         void start();
+
+        void pause();
     }
 }

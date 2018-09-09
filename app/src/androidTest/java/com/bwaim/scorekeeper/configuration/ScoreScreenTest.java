@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.ViewModelFactory;
+import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -62,6 +63,7 @@ public class ScoreScreenTest {
     @Before
     public void resetState() {
         ViewModelFactory.destroyInstance();
+        ConfigurationRepository.destroyInstance();
     }
 
     @Test
@@ -71,12 +73,16 @@ public class ScoreScreenTest {
         onView(withId(R.id.scoreTeamA)).check(matches(withText(INITIAL_SCORE)));
         onView(withId(R.id.scoreTeamB)).check(matches(withText(INITIAL_SCORE)));
         onView(withId(R.id.timer)).check(matches(withText(INITIAL_TIME)));
+        onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.start)));
     }
 
     @Test
-    public void startTimer_TimeChange() throws Exception {
+    public void startTimer_click() throws Exception {
 
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.start)));
+
         onView(withId(R.id.startPauseButton)).perform(click());
 
         TextView timerTV = mScoreActivityTestRule.getActivity().findViewById(R.id.timer);
@@ -91,5 +97,7 @@ public class ScoreScreenTest {
 
         assertTrue("'" + startText + "' > '" + endText + "'"
                 , startTimeInMillis > endTimeInMillis);
+
+        onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.pause)));
     }
 }
