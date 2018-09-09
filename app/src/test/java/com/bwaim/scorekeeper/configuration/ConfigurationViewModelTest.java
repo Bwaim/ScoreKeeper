@@ -16,8 +16,10 @@
 
 package com.bwaim.scorekeeper.configuration;
 
+import android.app.Application;
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
 
+import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationDataSource.LoadConfigurationCallback;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
@@ -39,6 +41,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Fabien Boismoreau on 31/08/2018.
@@ -65,6 +68,9 @@ public class ConfigurationViewModelTest {
     @Mock
     private ConfigurationRepository mConfigurationRepository;
 
+    @Mock
+    private Application mContext;
+
     @Captor
     private ArgumentCaptor<LoadConfigurationCallback> mLoadConfigurationCallbackCaptor;
 
@@ -76,15 +82,26 @@ public class ConfigurationViewModelTest {
     public void setupConfigurationViewModel() {
         MockitoAnnotations.initMocks(this);
 
+        setupContext();
+
         config = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
                 , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
         mockTimer = new MockTimer(INITIAL_TIME);
 
-        mConfigurationViewModel = new ConfigurationViewModel(mConfigurationRepository, mockTimer);
+        mConfigurationViewModel = new ConfigurationViewModel(mContext
+                , mConfigurationRepository, mockTimer);
 
         verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
         mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(config);
         mConfigurationViewModel.loadConfiguration();
+    }
+
+    private void setupContext() {
+        when(mContext.getApplicationContext()).thenReturn(mContext);
+        when(mContext.getString(R.string.start))
+                .thenReturn("start");
+        when(mContext.getString(R.string.pause))
+                .thenReturn("pause");
     }
 
     @After
@@ -124,6 +141,7 @@ public class ConfigurationViewModelTest {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
 
         mConfigurationViewModel.updateTime();
+
         mConfigurationViewModel.startTimer();
 
         mockTimer.simulateOnTick();
@@ -134,5 +152,38 @@ public class ConfigurationViewModelTest {
         long time2inMillis = sdf.parse(time2).getTime();
 
         assertTrue(time1inMillis > time2inMillis);
+    }
+
+    @Test
+    public void startTimer_labelChange() {
+        assertEquals(mContext.getString(R.string.start)
+                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+
+        mConfigurationViewModel.startTimer();
+        assertEquals(mContext.getString(R.string.pause)
+                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+
+        mConfigurationViewModel.startTimer();
+        assertEquals(mContext.getString(R.string.start)
+                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+    }
+
+    @Test
+    public void startTimer_pauseTime() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        mConfigurationViewModel.updateTime();
+
+        mConfigurationViewModel.startTimer();
+
+        mockTimer.simulateOnTick();
+        mConfigurationViewModel.startTimer();
+        String time1 = mConfigurationViewModel.mTime.getValue();
+        long time1inMillis = sdf.parse(time1).getTime();
+        mockTimer.simulateOnTick();
+        String time2 = mConfigurationViewModel.mTime.getValue();
+        long time2inMillis = sdf.parse(time2).getTime();
+
+        assertEquals(time1inMillis, time2inMillis);
     }
 }
