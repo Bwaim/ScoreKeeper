@@ -16,6 +16,7 @@
 
 package com.bwaim.scorekeeper;
 
+import android.app.Application;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
@@ -32,18 +33,22 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
 
     private static volatile ViewModelFactory INSTANCE;
 
+    private final Application mApplication;
+
     private final ConfigurationRepository mConfigurationRepository;
 
-    private ViewModelFactory(ConfigurationRepository repository) {
+    private ViewModelFactory(Application application, ConfigurationRepository repository) {
+        mApplication = application;
         mConfigurationRepository = repository;
     }
 
-    public static ViewModelFactory getInstance() {
+    public static ViewModelFactory getInstance(Application application) {
 
         if (INSTANCE == null) {
             synchronized (ViewModelFactory.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = new ViewModelFactory(Injection.provideConfigurationRepository());
+                    INSTANCE = new ViewModelFactory(application,
+                            Injection.provideConfigurationRepository());
                 }
             }
         }
@@ -60,7 +65,8 @@ public class ViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(ConfigurationViewModel.class)) {
             //noinspection unchecked
-            return (T) new ConfigurationViewModel(mConfigurationRepository, new DefaultTimer());
+            return (T) new ConfigurationViewModel(mApplication,
+                    mConfigurationRepository, new DefaultTimer());
         }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }

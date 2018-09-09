@@ -16,10 +16,12 @@
 
 package com.bwaim.scorekeeper.configuration;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
 
+import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
@@ -32,7 +34,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
-public class ConfigurationViewModel extends ViewModel {
+public class ConfigurationViewModel extends AndroidViewModel {
 
     public final long TIMER_INTERVAL = 1000;
 
@@ -42,13 +44,17 @@ public class ConfigurationViewModel extends ViewModel {
 
     public final MutableLiveData<String> mTime = new MutableLiveData<>();
 
+    public final MutableLiveData<String> startPauseButtonLabel = new MutableLiveData<>();
+
     private MyCountDownTimer mCountDownTimer;
 
-    public ConfigurationViewModel(ConfigurationRepository repository
+    public ConfigurationViewModel(Application app, ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
+        super(app);
         mConfigurationRepository = repository;
         mCountDownTimer = countDownTimer;
         loadConfiguration();
+        startPauseButtonLabel.setValue(getApplication().getString(R.string.start));
     }
 
     public void start() {
@@ -75,6 +81,7 @@ public class ConfigurationViewModel extends ViewModel {
 
     public void startTimer() {
         mCountDownTimer.start();
+        startPauseButtonLabel.setValue(getApplication().getString(R.string.pause));
     }
 
     public long getTime() {

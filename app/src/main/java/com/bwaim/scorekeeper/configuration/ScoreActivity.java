@@ -32,7 +32,7 @@ public class ScoreActivity extends AppCompatActivity {
 
     public static ConfigurationViewModel obtainViewModel(FragmentActivity activity) {
         // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance();
+        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
 
         return ViewModelProviders.of(activity, factory).get(ConfigurationViewModel.class);
     }
