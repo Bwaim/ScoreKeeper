@@ -16,9 +16,11 @@
 
 package com.bwaim.scorekeeper.configuration;
 
+import android.os.SystemClock;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.TextView;
 
 import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.ViewModelFactory;
@@ -28,10 +30,14 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.text.SimpleDateFormat;
+
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Fabien Boismoreau on 04/09/2018.
@@ -65,5 +71,25 @@ public class ScoreScreenTest {
         onView(withId(R.id.scoreTeamA)).check(matches(withText(INITIAL_SCORE)));
         onView(withId(R.id.scoreTeamB)).check(matches(withText(INITIAL_SCORE)));
         onView(withId(R.id.timer)).check(matches(withText(INITIAL_TIME)));
+    }
+
+    @Test
+    public void startTimer_TimeChange() throws Exception {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        onView(withId(R.id.startPauseButton)).perform(click());
+
+        TextView timerTV = mScoreActivityTestRule.getActivity().findViewById(R.id.timer);
+        String startText = timerTV.getText().toString();
+        long startTimeInMillis = sdf.parse(startText).getTime();
+
+        // Now we wait 2 seconds
+        SystemClock.sleep(2000);
+
+        String endText = timerTV.getText().toString();
+        long endTimeInMillis = sdf.parse(endText).getTime();
+
+        assertTrue("'" + startText + "' > '" + endText + "'"
+                , startTimeInMillis > endTimeInMillis);
     }
 }
