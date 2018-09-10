@@ -100,4 +100,16 @@ public class ScoreScreenTest {
 
         onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.pause)));
     }
+
+    @Test
+    public void resetGame() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        // Now we wait 2 seconds
+        SystemClock.sleep(2000);
+
+        onView(withId(R.id.newProgram)).perform(click());
+
+        onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.start)));
+        onView(withId(R.id.timer)).check(matches(withText(INITIAL_TIME)));
+    }
 }
