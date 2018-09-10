@@ -50,6 +50,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private boolean isStarted;
 
+    private long initialGameTime;
+
     public ConfigurationViewModel(Application app, ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
         super(app);
@@ -74,6 +76,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
         if (mConfigurationLiveData.getValue() != null) {
             updateTime();
             mCountDownTimer.attach(this);
+            initialGameTime = mConfigurationLiveData.getValue().getInitialTime();
         }
     }
 
@@ -107,6 +110,13 @@ public class ConfigurationViewModel extends AndroidViewModel {
         checkNotNull(mConfigurationLiveData.getValue());
         mConfigurationLiveData.getValue().setInitialTime(newTime);
         updateTime();
+    }
+
+    public void resetGame() {
+        if (isStarted) {
+            startTimer();
+        }
+        setTime(initialGameTime);
     }
 
     public interface MyCountDownTimer {
