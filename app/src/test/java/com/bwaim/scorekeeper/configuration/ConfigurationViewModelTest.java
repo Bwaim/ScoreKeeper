@@ -186,4 +186,19 @@ public class ConfigurationViewModelTest {
 
         assertEquals(time1inMillis, time2inMillis);
     }
+
+    @Test
+    public void resetGame_press() {
+
+        String buttonLabel = mConfigurationViewModel.startPauseButtonLabel.getValue();
+        String initialTime = mConfigurationViewModel.mTime.getValue();
+
+        mConfigurationViewModel.startTimer();
+        mockTimer.simulateOnTick();
+        mockTimer.simulateOnTick();
+        mConfigurationViewModel.resetGame();
+
+        assertEquals(buttonLabel, mConfigurationViewModel.startPauseButtonLabel.getValue());
+        assertEquals(initialTime, mConfigurationViewModel.mTime.getValue());
+    }
 }
