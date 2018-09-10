@@ -113,10 +113,10 @@ public class ConfigurationViewModel extends AndroidViewModel {
     }
 
     public void resetGame() {
+        setTime(initialGameTime);
         if (isStarted) {
             startTimer();
         }
-        setTime(initialGameTime);
     }
 
     public interface MyCountDownTimer {

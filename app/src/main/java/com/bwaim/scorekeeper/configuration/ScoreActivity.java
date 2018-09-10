@@ -70,4 +70,8 @@ public class ScoreActivity extends AppCompatActivity {
     public void startPauseDebugging(View view) {
         mConfigurationViewModel.startTimer();
     }
+
+    public void resetGame(View view) {
+        mConfigurationViewModel.resetGame();
+    }
 }
