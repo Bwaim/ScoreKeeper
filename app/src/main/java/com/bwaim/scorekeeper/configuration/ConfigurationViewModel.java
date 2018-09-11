@@ -119,15 +119,42 @@ public class ConfigurationViewModel extends AndroidViewModel {
         mCountDownTimer.reset();
         isStarted = false;
         updateStartPauseLabel();
+        resetScore();
+    }
+
+    public void syntaxError(int teamId) {
+        if (isStarted) {
+            checkNotNull(mConfigurationLiveData.getValue());
+            int syntaxError = mConfigurationLiveData.getValue().getSyntaxError();
+            if (teamId == 1) {
+                int newScore = updateScore(mConfigurationLiveData.getValue().getScoreA(), -syntaxError);
+                mConfigurationLiveData.getValue().setScoreA(newScore);
+            } else if (teamId == 2) {
+                int newScore = updateScore(mConfigurationLiveData.getValue().getScoreB(), -syntaxError);
+                mConfigurationLiveData.getValue().setScoreB(newScore);
+            }
+        }
+    }
+
+    @VisibleForTesting
+    public int updateScore(int score, int modifier) {
+        score += modifier;
+        if (score < 0) {
+            score = 0;
+        }
+        return score;
+    }
+
+    private void resetScore() {
+        checkNotNull(mConfigurationLiveData.getValue());
+        int initialScore = mConfigurationLiveData.getValue().getInitialScore();
+        mConfigurationLiveData.getValue().setScoreA(initialScore);
+        mConfigurationLiveData.getValue().setScoreB(initialScore);
     }
 
     private void updateStartPauseLabel() {
         startPauseButtonLabel.setValue(isStarted ? getApplication().getString(R.string.pause)
                 : getApplication().getString(R.string.start));
-    }
-
-    public void syntaxError(int teamId) {
-
     }
 
     public interface MyCountDownTimer {

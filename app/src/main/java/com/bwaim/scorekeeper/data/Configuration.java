@@ -26,8 +26,8 @@ public class Configuration {
     private String nameA;
     private String nameB;
     private int initialScore;
-    private int initialScoreA;
-    private int initialScoreB;
+    private int scoreA;
+    private int scoreB;
 
     // Game information
     private int syntaxError;
@@ -40,8 +40,8 @@ public class Configuration {
         nameA = "Toto";
         nameB = "Coder B";
         initialScore = 25;
-        initialScoreA = initialScore;
-        initialScoreB = initialScore;
+        scoreA = initialScore;
+        scoreB = initialScore;
         syntaxError = 1;
         logicError = 3;
         virusAttack = 5;
@@ -54,8 +54,8 @@ public class Configuration {
         this.nameA = nameA;
         this.nameB = nameB;
         this.initialScore = initialScore;
-        this.initialScoreA = initialScore;
-        this.initialScoreB = initialScore;
+        this.scoreA = initialScore;
+        this.scoreB = initialScore;
         this.syntaxError = syntaxError;
         this.logicError = logicError;
         this.virusAttack = virusAttack;
@@ -119,20 +119,20 @@ public class Configuration {
         this.initialTime = initialTime;
     }
 
-    public int getInitialScoreA() {
-        return initialScoreA;
+    public int getScoreA() {
+        return scoreA;
     }
 
-    public void setInitialScoreA(int initialScoreA) {
-        this.initialScoreA = initialScoreA;
+    public void setScoreA(int scoreA) {
+        this.scoreA = scoreA;
     }
 
-    public int getInitialScoreB() {
-        return initialScoreB;
+    public int getScoreB() {
+        return scoreB;
     }
 
-    public void setInitialScoreB(int initialScoreB) {
-        this.initialScoreB = initialScoreB;
+    public void setScoreB(int scoreB) {
+        this.scoreB = scoreB;
     }
 
     public long getTime() {
