@@ -29,7 +29,7 @@ public class DefaultTimer implements ConfigurationViewModel.MyCountDownTimer {
     @Override
     public void attach(ConfigurationViewModel viewModel) {
         mViewModel = viewModel;
-        init();
+        init(mViewModel.getTime());
     }
 
     @Override
@@ -40,11 +40,17 @@ public class DefaultTimer implements ConfigurationViewModel.MyCountDownTimer {
     @Override
     public void pause() {
         mCountDownTimer.cancel();
-        init();
+        init(mViewModel.getTime());
     }
 
-    private void init() {
-        mCountDownTimer = new CountDownTimer(mViewModel.getTime(), mViewModel.TIMER_INTERVAL) {
+    @Override
+    public void reset() {
+        mCountDownTimer.cancel();
+        init(mViewModel.getInitialTime());
+    }
+
+    private void init(long time) {
+        mCountDownTimer = new CountDownTimer(time, mViewModel.TIMER_INTERVAL) {
 
             public void onTick(long millisUntilFinished) {
                 // Here the remaining time is saved

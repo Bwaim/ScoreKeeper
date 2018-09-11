@@ -50,8 +50,6 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private boolean isStarted;
 
-    private long initialGameTime;
-
     public ConfigurationViewModel(Application app, ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
         super(app);
@@ -76,17 +74,16 @@ public class ConfigurationViewModel extends AndroidViewModel {
         if (mConfigurationLiveData.getValue() != null) {
             updateTime();
             mCountDownTimer.attach(this);
-            initialGameTime = mConfigurationLiveData.getValue().getInitialTime();
         }
     }
 
     @VisibleForTesting
     public void updateTime() {
-        Long initialTime = getTime();
+        Long time = getTime();
         mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
-                TimeUnit.MILLISECONDS.toMinutes(initialTime),
-                TimeUnit.MILLISECONDS.toSeconds(initialTime) -
-                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(initialTime))));
+                TimeUnit.MILLISECONDS.toMinutes(time),
+                TimeUnit.MILLISECONDS.toSeconds(time) -
+                        TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))));
     }
 
     public void startTimer() {
@@ -97,26 +94,40 @@ public class ConfigurationViewModel extends AndroidViewModel {
         } else {
             mCountDownTimer.pause();
         }
-        startPauseButtonLabel.setValue(isStarted ? getApplication().getString(R.string.pause)
-                : getApplication().getString(R.string.start));
+        updateStartPauseLabel();
     }
 
-    public long getTime() {
+    public long getInitialTime() {
         checkNotNull(mConfigurationLiveData.getValue());
         return mConfigurationLiveData.getValue().getInitialTime();
     }
 
+    public long getTime() {
+        checkNotNull(mConfigurationLiveData.getValue());
+        return mConfigurationLiveData.getValue().getTime();
+    }
+
     public void setTime(long newTime) {
         checkNotNull(mConfigurationLiveData.getValue());
-        mConfigurationLiveData.getValue().setInitialTime(newTime);
+        mConfigurationLiveData.getValue().setTime(newTime);
         updateTime();
     }
 
     public void resetGame() {
-        setTime(initialGameTime);
-        if (isStarted) {
-            startTimer();
-        }
+        checkNotNull(mConfigurationLiveData.getValue());
+        setTime(mConfigurationLiveData.getValue().getInitialTime());
+        mCountDownTimer.reset();
+        isStarted = false;
+        updateStartPauseLabel();
+    }
+
+    private void updateStartPauseLabel() {
+        startPauseButtonLabel.setValue(isStarted ? getApplication().getString(R.string.pause)
+                : getApplication().getString(R.string.start));
+    }
+
+    public void syntaxError(int teamId) {
+
     }
 
     public interface MyCountDownTimer {
@@ -125,5 +136,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
         void start();
 
         void pause();
+
+        void reset();
     }
 }

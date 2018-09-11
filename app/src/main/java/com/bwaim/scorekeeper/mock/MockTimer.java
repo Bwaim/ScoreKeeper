@@ -53,4 +53,9 @@ public class MockTimer implements ConfigurationViewModel.MyCountDownTimer {
     public void pause() {
         isStarted = false;
     }
+
+    @Override
+    public void reset() {
+        mViewModel.setTime(mViewModel.getInitialTime());
+    }
 }

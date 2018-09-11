@@ -26,21 +26,27 @@ public class Configuration {
     private String nameA;
     private String nameB;
     private int initialScore;
+    private int initialScoreA;
+    private int initialScoreB;
 
     // Game information
     private int syntaxError;
     private int logicError;
     private int virusAttack;
     private long initialTime;
+    private long time;
 
     public Configuration() {
         nameA = "Toto";
         nameB = "Coder B";
         initialScore = 25;
+        initialScoreA = initialScore;
+        initialScoreB = initialScore;
         syntaxError = 1;
         logicError = 3;
         virusAttack = 5;
         initialTime = 90000;
+        time = initialTime;
     }
 
     public Configuration(String nameA, String nameB, int initialScore, int syntaxError
@@ -48,9 +54,12 @@ public class Configuration {
         this.nameA = nameA;
         this.nameB = nameB;
         this.initialScore = initialScore;
+        this.initialScoreA = initialScore;
+        this.initialScoreB = initialScore;
         this.syntaxError = syntaxError;
         this.logicError = logicError;
         this.virusAttack = virusAttack;
+        this.time = initialTime;
         this.initialTime = initialTime;
     }
 
@@ -108,5 +117,29 @@ public class Configuration {
 
     public void setInitialTime(long initialTime) {
         this.initialTime = initialTime;
+    }
+
+    public int getInitialScoreA() {
+        return initialScoreA;
+    }
+
+    public void setInitialScoreA(int initialScoreA) {
+        this.initialScoreA = initialScoreA;
+    }
+
+    public int getInitialScoreB() {
+        return initialScoreB;
+    }
+
+    public void setInitialScoreB(int initialScoreB) {
+        this.initialScoreB = initialScoreB;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }
