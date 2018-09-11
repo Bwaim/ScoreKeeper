@@ -201,4 +201,41 @@ public class ConfigurationViewModelTest {
         assertEquals(buttonLabel, mConfigurationViewModel.startPauseButtonLabel.getValue());
         assertEquals(initialTime, mConfigurationViewModel.mTime.getValue());
     }
+
+    @Test
+    public void syntaxError_click_started() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.startTimer();
+        mConfigurationViewModel.syntaxError(1);
+
+        assertEquals(INITIAL_SCORE - SYNTAX_ERROR
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+    }
+
+    @Test
+    public void syntaxError_click_notStarted() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.syntaxError(1);
+
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+    }
+
+    @Test
+    public void modificationScore_reset() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.startTimer();
+        mConfigurationViewModel.syntaxError(1);
+        mConfigurationViewModel.resetGame();
+
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+    }
+
+    @Test
+    public void updateScore_zero() {
+        int score = mConfigurationViewModel.updateScore(0, -1);
+
+        assertEquals(0, score);
+    }
 }
