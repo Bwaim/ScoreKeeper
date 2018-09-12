@@ -23,7 +23,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.databinding.TimerFragBinding;
 
 
@@ -57,6 +59,12 @@ public class TimerFragment extends Fragment {
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mTimerFragBinding.setViewModel(mConfigurationViewModel);
         mTimerFragBinding.setLifecycleOwner(this);
+
+        Button startPauseB = mTimerFragBinding.getRoot().findViewById(R.id.startPauseButton);
+        startPauseB.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
+
+        Button resetGameB = mTimerFragBinding.getRoot().findViewById(R.id.newProgram);
+        resetGameB.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
 
         // Inflate the layout for this fragment
         return mTimerFragBinding.getRoot();
