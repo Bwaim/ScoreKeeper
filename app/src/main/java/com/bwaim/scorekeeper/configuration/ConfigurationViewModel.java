@@ -139,7 +139,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
     }
 
     @VisibleForTesting
-    public int updateScore(int score, int modifier) {
+    public static int updateScore(int score, int modifier) {
         score += modifier;
         if (score < 0) {
             score = 0;

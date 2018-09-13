@@ -29,12 +29,16 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.assertEquals;
@@ -232,10 +236,33 @@ public class ConfigurationViewModelTest {
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
     }
 
-    @Test
-    public void updateScore_zero() {
-        int score = mConfigurationViewModel.updateScore(0, -1);
+    @RunWith(Parameterized.class)
+    public static class ConfigurationViewModelParameterizedTest {
 
-        assertEquals(0, score);
+        @Parameterized.Parameter()
+        public int score;
+
+        @Parameterized.Parameter(value = 1)
+        public int modifier;
+
+        @Parameterized.Parameter(value = 2)
+        public int result;
+
+        @Parameterized.Parameters(name = "{index} : score({0}, {1}) => {2}")
+        public static Collection<Object[]> initParameters() {
+            return Arrays.asList(new Object[][]{
+                    {25, -1, 24},
+                    {0, -1, 0},
+                    {1, -2, 0},
+                    {0, 3, 3}
+            });
+        }
+
+        @Test
+        public void updateScore_zero() {
+            int score = ConfigurationViewModel.updateScore(this.score, this.modifier);
+
+            assertEquals(this.result, score);
+        }
     }
 }
