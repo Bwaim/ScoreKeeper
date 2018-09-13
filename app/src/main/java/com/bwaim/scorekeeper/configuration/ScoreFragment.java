@@ -23,7 +23,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
 
 public class ScoreFragment extends Fragment {
@@ -54,6 +56,12 @@ public class ScoreFragment extends Fragment {
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mScoreFragBinding.setViewModel(mConfigurationViewModel);
         mScoreFragBinding.setLifecycleOwner(this);
+
+        Button syntaxErrorA = mScoreFragBinding.getRoot().findViewById(R.id.syntaxErrorA);
+        syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
+
+        Button syntaxErrorB = mScoreFragBinding.getRoot().findViewById(R.id.syntaxErrorB);
+        syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
 
         // Inflate the layout for this fragment
         return mScoreFragBinding.getRoot();
