@@ -55,6 +55,7 @@ public class ScoreScreenTest {
     private final static String NAME_B = "Coder B";
     private final static String INITIAL_SCORE = "25";
     private final static String INITIAL_TIME = "01:30";
+    private final static int SYNTAX_ERROR = 1;
 
     @Rule
     public ActivityTestRule<ScoreActivity> mScoreActivityTestRule =
@@ -106,10 +107,22 @@ public class ScoreScreenTest {
         onView(withId(R.id.startPauseButton)).perform(click());
         // Now we wait 2 seconds
         SystemClock.sleep(2000);
+        onView(withId(R.id.syntaxErrorA)).perform(click());
+        onView(withId(R.id.syntaxErrorB)).perform(click());
 
         onView(withId(R.id.newProgram)).perform(click());
 
         onView(withId(R.id.startPauseButton)).check(matches(withText(R.string.start)));
         onView(withId(R.id.timer)).check(matches(withText(INITIAL_TIME)));
+        onView(withId(R.id.scoreTeamA)).check(matches(withText(INITIAL_SCORE)));
+        onView(withId(R.id.scoreTeamB)).check(matches(withText(INITIAL_SCORE)));
+    }
+
+    @Test
+    public void syntaxErrorA_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.syntaxErrorA)).perform(click());
+        onView(withId(R.id.scoreTeamA)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) - SYNTAX_ERROR))));
     }
 }
