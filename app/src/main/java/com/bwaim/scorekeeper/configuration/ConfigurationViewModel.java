@@ -127,8 +127,10 @@ public class ConfigurationViewModel extends AndroidViewModel {
             checkNotNull(mConfigurationLiveData.getValue());
             int syntaxError = mConfigurationLiveData.getValue().getSyntaxError();
             if (teamId == 1) {
-                int newScore = updateScore(mConfigurationLiveData.getValue().getScoreA(), -syntaxError);
-                mConfigurationLiveData.getValue().setScoreA(newScore);
+                Configuration config = mConfigurationLiveData.getValue();
+                int newScore = updateScore(config.getScoreA(), -syntaxError);
+                config.setScoreA(newScore);
+                mConfigurationLiveData.setValue(config);
             } else if (teamId == 2) {
                 int newScore = updateScore(mConfigurationLiveData.getValue().getScoreB(), -syntaxError);
                 mConfigurationLiveData.getValue().setScoreB(newScore);
@@ -147,9 +149,11 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private void resetScore() {
         checkNotNull(mConfigurationLiveData.getValue());
-        int initialScore = mConfigurationLiveData.getValue().getInitialScore();
-        mConfigurationLiveData.getValue().setScoreA(initialScore);
-        mConfigurationLiveData.getValue().setScoreB(initialScore);
+        Configuration config = mConfigurationLiveData.getValue();
+        int initialScore = config.getInitialScore();
+        config.setScoreA(initialScore);
+        config.setScoreB(initialScore);
+        mConfigurationLiveData.setValue(config);
     }
 
     private void updateStartPauseLabel() {
