@@ -138,6 +138,22 @@ public class ConfigurationViewModel extends AndroidViewModel {
         }
     }
 
+    public void logicError(int teamId) {
+        if (isStarted) {
+            checkNotNull(mConfigurationLiveData.getValue());
+            int logicError = mConfigurationLiveData.getValue().getLogicError();
+            Configuration config = mConfigurationLiveData.getValue();
+            if (teamId == 1) {
+                int newScore = updateScore(config.getScoreA(), -logicError);
+                config.setScoreA(newScore);
+            } else if (teamId == 2) {
+                int newScore = updateScore(config.getScoreB(), -logicError);
+                config.setScoreB(newScore);
+            }
+            mConfigurationLiveData.setValue(config);
+        }
+    }
+
     @VisibleForTesting
     public static int updateScore(int score, int modifier) {
         score += modifier;
