@@ -125,4 +125,12 @@ public class ScoreScreenTest {
         onView(withId(R.id.scoreTeamA)).check(matches(withText(
                 String.valueOf(Integer.parseInt(INITIAL_SCORE) - SYNTAX_ERROR))));
     }
+
+    @Test
+    public void syntaxErrorB_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.syntaxErrorB)).perform(click());
+        onView(withId(R.id.scoreTeamB)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) - SYNTAX_ERROR))));
+    }
 }
