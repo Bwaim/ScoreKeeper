@@ -24,7 +24,7 @@ android {
         targetSdkVersion target_sdk
         versionCode version_code
         versionName version_name
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.bwaim.scorekeeper.utils.CustomJUnitRunner"
     }
     buildTypes {
         release {
