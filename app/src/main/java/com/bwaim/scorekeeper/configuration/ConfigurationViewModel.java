@@ -125,16 +125,16 @@ public class ConfigurationViewModel extends AndroidViewModel {
     public void syntaxError(int teamId) {
         if (isStarted) {
             checkNotNull(mConfigurationLiveData.getValue());
-            int syntaxError = mConfigurationLiveData.getValue().getSyntaxError();
+            Configuration config = mConfigurationLiveData.getValue();
+            int syntaxError = config.getSyntaxError();
             if (teamId == 1) {
-                Configuration config = mConfigurationLiveData.getValue();
                 int newScore = updateScore(config.getScoreA(), -syntaxError);
                 config.setScoreA(newScore);
-                mConfigurationLiveData.setValue(config);
             } else if (teamId == 2) {
-                int newScore = updateScore(mConfigurationLiveData.getValue().getScoreB(), -syntaxError);
-                mConfigurationLiveData.getValue().setScoreB(newScore);
+                int newScore = updateScore(config.getScoreB(), -syntaxError);
+                config.setScoreB(newScore);
             }
+            mConfigurationLiveData.setValue(config);
         }
     }
 
