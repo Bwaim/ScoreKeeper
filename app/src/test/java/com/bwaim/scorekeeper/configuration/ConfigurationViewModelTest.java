@@ -211,18 +211,24 @@ public class ConfigurationViewModelTest {
         checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
         mConfigurationViewModel.startTimer();
         mConfigurationViewModel.syntaxError(1);
+        mConfigurationViewModel.syntaxError(2);
 
         assertEquals(INITIAL_SCORE - SYNTAX_ERROR
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE - SYNTAX_ERROR
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
     }
 
     @Test
     public void syntaxError_click_notStarted() {
         checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
         mConfigurationViewModel.syntaxError(1);
+        mConfigurationViewModel.syntaxError(1);
 
         assertEquals(INITIAL_SCORE
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
     }
 
     @Test
