@@ -236,6 +236,31 @@ public class ConfigurationViewModelTest {
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
     }
 
+    @Test
+    public void logicError_click_started() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.startTimer();
+        mConfigurationViewModel.logicError(1);
+        mConfigurationViewModel.logicError(2);
+
+        assertEquals(INITIAL_SCORE - LOGIC_ERROR
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE - LOGIC_ERROR
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
+    }
+
+    @Test
+    public void logicError_click_notStarted() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.logicError(1);
+        mConfigurationViewModel.logicError(2);
+
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
+    }
+
     @RunWith(Parameterized.class)
     public static class ConfigurationViewModelParameterizedTest {
 
