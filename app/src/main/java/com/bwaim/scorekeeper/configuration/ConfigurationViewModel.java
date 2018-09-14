@@ -141,8 +141,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
     public void logicError(int teamId) {
         if (isStarted) {
             checkNotNull(mConfigurationLiveData.getValue());
-            int logicError = mConfigurationLiveData.getValue().getLogicError();
             Configuration config = mConfigurationLiveData.getValue();
+            int logicError = config.getLogicError();
             if (teamId == 1) {
                 int newScore = updateScore(config.getScoreA(), -logicError);
                 config.setScoreA(newScore);
