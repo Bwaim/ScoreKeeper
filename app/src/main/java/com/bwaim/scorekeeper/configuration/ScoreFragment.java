@@ -63,6 +63,12 @@ public class ScoreFragment extends Fragment {
         Button syntaxErrorB = mScoreFragBinding.getRoot().findViewById(R.id.syntaxErrorB);
         syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
 
+        Button logicErrorA = mScoreFragBinding.getRoot().findViewById(R.id.logicErrorA);
+        logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
+
+        Button logicErrorB = mScoreFragBinding.getRoot().findViewById(R.id.logicErrorB);
+        logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
+
         Button virusAttackA = mScoreFragBinding.getRoot().findViewById(R.id.virusAttackA);
         virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
 
