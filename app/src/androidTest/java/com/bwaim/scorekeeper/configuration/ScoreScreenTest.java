@@ -137,6 +137,22 @@ public class ScoreScreenTest {
     }
 
     @Test
+    public void logicErrorA_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.logicErrorA)).perform(click());
+        onView(withId(R.id.scoreTeamA)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) - LOGIC_ERROR))));
+    }
+
+    @Test
+    public void logicErrorB_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.logicErrorB)).perform(click());
+        onView(withId(R.id.scoreTeamB)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) - LOGIC_ERROR))));
+    }
+
+    @Test
     public void virusAttackA_click() {
         onView(withId(R.id.startPauseButton)).perform(click());
         onView(withId(R.id.virusAttackA)).perform(click());
