@@ -154,6 +154,22 @@ public class ConfigurationViewModel extends AndroidViewModel {
         }
     }
 
+    public void virusAttack(int teamId) {
+        if (isStarted) {
+            checkNotNull(mConfigurationLiveData.getValue());
+            Configuration config = mConfigurationLiveData.getValue();
+            int virusAttack = config.getVirusAttack();
+            if (teamId == 1) {
+                int newScore = updateScore(config.getScoreA(), -virusAttack);
+                config.setScoreA(newScore);
+            } else if (teamId == 2) {
+                int newScore = updateScore(config.getScoreB(), -virusAttack);
+                config.setScoreB(newScore);
+            }
+            mConfigurationLiveData.setValue(config);
+        }
+    }
+
     @VisibleForTesting
     public static int updateScore(int score, int modifier) {
         score += modifier;
