@@ -56,6 +56,8 @@ public class ScoreScreenTest {
     private final static String INITIAL_SCORE = "25";
     private final static String INITIAL_TIME = "01:30";
     private final static int SYNTAX_ERROR = 1;
+    private final static int LOGIC_ERROR = 3;
+    private final static int VIRUS_ATTACK = 5;
 
     @Rule
     public ActivityTestRule<ScoreActivity> mScoreActivityTestRule =
@@ -132,5 +134,21 @@ public class ScoreScreenTest {
         onView(withId(R.id.syntaxErrorB)).perform(click());
         onView(withId(R.id.scoreTeamB)).check(matches(withText(
                 String.valueOf(Integer.parseInt(INITIAL_SCORE) - SYNTAX_ERROR))));
+    }
+
+    @Test
+    public void virusAttackA_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.virusAttackA)).perform(click());
+        onView(withId(R.id.scoreTeamB)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) + VIRUS_ATTACK))));
+    }
+
+    @Test
+    public void virusAttackB_click() {
+        onView(withId(R.id.startPauseButton)).perform(click());
+        onView(withId(R.id.virusAttackB)).perform(click());
+        onView(withId(R.id.scoreTeamA)).check(matches(withText(
+                String.valueOf(Integer.parseInt(INITIAL_SCORE) + VIRUS_ATTACK))));
     }
 }
