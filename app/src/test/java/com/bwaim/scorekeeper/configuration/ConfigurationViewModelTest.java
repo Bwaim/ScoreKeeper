@@ -272,11 +272,12 @@ public class ConfigurationViewModelTest {
         checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
         mConfigurationViewModel.startTimer();
         mConfigurationViewModel.virusAttack(1);
+        mConfigurationViewModel.virusAttack(1);
         mConfigurationViewModel.virusAttack(2);
 
-        assertEquals(INITIAL_SCORE - VIRUS_ATTACK
+        assertEquals(INITIAL_SCORE + VIRUS_ATTACK
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
-        assertEquals(INITIAL_SCORE - VIRUS_ATTACK
+        assertEquals(INITIAL_SCORE + VIRUS_ATTACK * 2
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
     }
 
