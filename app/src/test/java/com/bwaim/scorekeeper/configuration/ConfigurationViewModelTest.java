@@ -267,6 +267,31 @@ public class ConfigurationViewModelTest {
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
     }
 
+    @Test
+    public void virusAttack_click_started() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.startTimer();
+        mConfigurationViewModel.virusAttack(1);
+        mConfigurationViewModel.virusAttack(2);
+
+        assertEquals(INITIAL_SCORE - VIRUS_ATTACK
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE - VIRUS_ATTACK
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
+    }
+
+    @Test
+    public void virusAttack_click_notStarted() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.virusAttack(1);
+        mConfigurationViewModel.virusAttack(2);
+
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
+        assertEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
+    }
+
     @RunWith(Parameterized.class)
     public static class ConfigurationViewModelParameterizedTest {
 
