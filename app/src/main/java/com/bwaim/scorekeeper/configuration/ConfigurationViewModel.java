@@ -160,11 +160,11 @@ public class ConfigurationViewModel extends AndroidViewModel {
             Configuration config = mConfigurationLiveData.getValue();
             int virusAttack = config.getVirusAttack();
             if (teamId == 1) {
-                int newScore = updateScore(config.getScoreA(), -virusAttack);
-                config.setScoreA(newScore);
-            } else if (teamId == 2) {
-                int newScore = updateScore(config.getScoreB(), -virusAttack);
+                int newScore = updateScore(config.getScoreB(), virusAttack);
                 config.setScoreB(newScore);
+            } else if (teamId == 2) {
+                int newScore = updateScore(config.getScoreA(), virusAttack);
+                config.setScoreA(newScore);
             }
             mConfigurationLiveData.setValue(config);
         }
