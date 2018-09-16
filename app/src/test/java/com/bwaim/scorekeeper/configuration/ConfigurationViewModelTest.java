@@ -45,6 +45,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -63,6 +65,7 @@ public class ConfigurationViewModelTest {
     private final static int INITIAL_TIME = 60000;
 
     private final static String EXPECTED_TIME = "01:00";
+    private final static String TEAM_A_WIN = "TeamA wins!";
 
     private Configuration config;
 
@@ -107,6 +110,8 @@ public class ConfigurationViewModelTest {
                 .thenReturn("start");
         when(mContext.getString(R.string.pause))
                 .thenReturn("pause");
+        when(mContext.getString(eq(R.string.resultWin), any(String.class)))
+                .thenReturn(TEAM_A_WIN);
     }
 
     @After
@@ -304,6 +309,15 @@ public class ConfigurationViewModelTest {
     @Test
     public void hasWinner_noWinner() {
         assertFalse(mConfigurationViewModel.hasWinner());
+    }
+
+    @Test
+    public void displayResult_teamA() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationViewModel.mConfigurationLiveData.getValue();
+        config.setScoreA(0);
+        mConfigurationViewModel.displayWinner();
+        assertEquals(TEAM_A_WIN, mConfigurationViewModel.mTime.getValue());
     }
 
     @RunWith(Parameterized.class)
