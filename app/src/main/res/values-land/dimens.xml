@@ -15,7 +15,6 @@
   -->
 
 <resources>
-    <dimen name="timerPadding">32dp</dimen>
     <dimen name="scoreSize">36sp</dimen>
     <dimen name="timerSize">30sp</dimen>
 </resources>
