@@ -167,4 +167,16 @@ public class ScoreScreenTest {
         onView(withId(R.id.scoreTeamA)).check(matches(withText(
                 String.valueOf(Integer.parseInt(INITIAL_SCORE) + VIRUS_ATTACK))));
     }
+
+    @Test
+    public void checkWinner_TeamA() {
+        TextView scoreA = mScoreActivityTestRule.getActivity().findViewById(R.id.scoreTeamA);
+        onView(withId(R.id.startPauseButton)).perform(click());
+        while (!"0".equals(scoreA.getText().toString())) {
+            onView(withId(R.id.logicErrorA)).perform(click());
+        }
+        onView(withId(R.id.timer)).check(matches(
+                withText(mScoreActivityTestRule.getActivity()
+                        .getString(R.string.resultWin, NAME_A))));
+    }
 }
