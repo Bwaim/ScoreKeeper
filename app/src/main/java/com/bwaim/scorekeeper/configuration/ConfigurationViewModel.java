@@ -136,7 +136,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
             }
             mConfigurationLiveData.setValue(config);
             if (hasWinner()) {
-                // Display winner
+                displayWinner();
             }
         }
     }
@@ -155,7 +155,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
             }
             mConfigurationLiveData.setValue(config);
             if (hasWinner()) {
-                // Display winner
+                displayWinner();
             }
         }
     }
@@ -190,6 +190,15 @@ public class ConfigurationViewModel extends AndroidViewModel {
         checkNotNull(mConfigurationLiveData.getValue());
         Configuration config = mConfigurationLiveData.getValue();
         return (config.getScoreA() == 0 || config.getScoreB() == 0);
+    }
+
+    @VisibleForTesting
+    public void displayWinner() {
+        checkNotNull(mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationLiveData.getValue();
+        mTime.setValue(config.getScoreA() == 0
+                ? getApplication().getString(R.string.resultWin, config.getNameA())
+                : getApplication().getString(R.string.resultWin, config.getNameB()));
     }
 
     private void resetScore() {

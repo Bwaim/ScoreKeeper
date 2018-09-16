@@ -26,5 +26,6 @@
     <string name="timerStart">01:30</string>
     <string name="start">Start!</string>
     <string name="pause">Pause</string>
-    <string name="resultEgality">No winner!</string>
+    <string name="resultEquality">No winner!</string>
+    <string name="resultWin">%1$s wins!</string>
 </resources>
