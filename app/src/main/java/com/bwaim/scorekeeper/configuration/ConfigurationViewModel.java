@@ -135,6 +135,9 @@ public class ConfigurationViewModel extends AndroidViewModel {
                 config.setScoreB(newScore);
             }
             mConfigurationLiveData.setValue(config);
+            if (hasWinner()) {
+                // Display winner
+            }
         }
     }
 
@@ -151,6 +154,9 @@ public class ConfigurationViewModel extends AndroidViewModel {
                 config.setScoreB(newScore);
             }
             mConfigurationLiveData.setValue(config);
+            if (hasWinner()) {
+                // Display winner
+            }
         }
     }
 
@@ -177,6 +183,13 @@ public class ConfigurationViewModel extends AndroidViewModel {
             score = 0;
         }
         return score;
+    }
+
+    @VisibleForTesting
+    public boolean hasWinner() {
+        checkNotNull(mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationLiveData.getValue();
+        return (config.getScoreA() == 0 || config.getScoreB() == 0);
     }
 
     private void resetScore() {
