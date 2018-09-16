@@ -42,6 +42,7 @@ import java.util.Collection;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -291,6 +292,18 @@ public class ConfigurationViewModelTest {
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
         assertEquals(INITIAL_SCORE
                 , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreB());
+    }
+
+    @Test
+    public void hasWinner_winner() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        mConfigurationViewModel.mConfigurationLiveData.getValue().setScoreA(0);
+        assertTrue(mConfigurationViewModel.hasWinner());
+    }
+
+    @Test
+    public void hasWinner_noWinner() {
+        assertFalse(mConfigurationViewModel.hasWinner());
     }
 
     @RunWith(Parameterized.class)
