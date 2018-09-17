@@ -123,56 +123,40 @@ public class ConfigurationViewModel extends AndroidViewModel {
     }
 
     public void syntaxError(int teamId) {
-        if (isStarted) {
-            checkNotNull(mConfigurationLiveData.getValue());
-            Configuration config = mConfigurationLiveData.getValue();
-            int syntaxError = config.getSyntaxError();
-            if (teamId == 1) {
-                int newScore = updateScore(config.getScoreA(), -syntaxError);
-                config.setScoreA(newScore);
-            } else if (teamId == 2) {
-                int newScore = updateScore(config.getScoreB(), -syntaxError);
-                config.setScoreB(newScore);
-            }
-            mConfigurationLiveData.setValue(config);
-            if (hasWinner()) {
-                displayWinner();
-            }
-        }
+        checkNotNull(mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationLiveData.getValue();
+        modifyScore(teamId, -config.getSyntaxError());
     }
 
     public void logicError(int teamId) {
+        checkNotNull(mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationLiveData.getValue();
+        modifyScore(teamId, -config.getLogicError());
+    }
+
+    public void virusAttack(int teamId) {
+        checkNotNull(mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationLiveData.getValue();
+        // Inverse the team id as the effect is on other team
+        teamId = teamId == 1 ? 2 : 1;
+        modifyScore(teamId, config.getVirusAttack());
+    }
+
+    private void modifyScore(int teamId, int value) {
         if (isStarted) {
             checkNotNull(mConfigurationLiveData.getValue());
             Configuration config = mConfigurationLiveData.getValue();
-            int logicError = config.getLogicError();
             if (teamId == 1) {
-                int newScore = updateScore(config.getScoreA(), -logicError);
+                int newScore = updateScore(config.getScoreA(), value);
                 config.setScoreA(newScore);
             } else if (teamId == 2) {
-                int newScore = updateScore(config.getScoreB(), -logicError);
+                int newScore = updateScore(config.getScoreB(), value);
                 config.setScoreB(newScore);
             }
             mConfigurationLiveData.setValue(config);
             if (hasWinner()) {
                 displayWinner();
             }
-        }
-    }
-
-    public void virusAttack(int teamId) {
-        if (isStarted) {
-            checkNotNull(mConfigurationLiveData.getValue());
-            Configuration config = mConfigurationLiveData.getValue();
-            int virusAttack = config.getVirusAttack();
-            if (teamId == 1) {
-                int newScore = updateScore(config.getScoreB(), virusAttack);
-                config.setScoreB(newScore);
-            } else if (teamId == 2) {
-                int newScore = updateScore(config.getScoreA(), virusAttack);
-                config.setScoreA(newScore);
-            }
-            mConfigurationLiveData.setValue(config);
         }
     }
 
