@@ -28,11 +28,27 @@ import android.widget.Button;
 import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ScoreFragment extends Fragment {
 
     private ConfigurationViewModel mConfigurationViewModel;
 
     private ScoreFragBinding mScoreFragBinding;
+
+    @BindView(R.id.syntaxErrorA)
+    Button syntaxErrorA;
+    @BindView(R.id.syntaxErrorB)
+    Button syntaxErrorB;
+    @BindView(R.id.logicErrorA)
+    Button logicErrorA;
+    @BindView(R.id.logicErrorB)
+    Button logicErrorB;
+    @BindView(R.id.virusAttackA)
+    Button virusAttackA;
+    @BindView(R.id.virusAttackB)
+    Button virusAttackB;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -53,26 +69,21 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
+        ButterKnife.bind(this, mScoreFragBinding.getRoot());
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mScoreFragBinding.setViewModel(mConfigurationViewModel);
         mScoreFragBinding.setLifecycleOwner(this);
 
-        Button syntaxErrorA = mScoreFragBinding.getRoot().findViewById(R.id.syntaxErrorA);
         syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
 
-        Button syntaxErrorB = mScoreFragBinding.getRoot().findViewById(R.id.syntaxErrorB);
         syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
 
-        Button logicErrorA = mScoreFragBinding.getRoot().findViewById(R.id.logicErrorA);
         logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
 
-        Button logicErrorB = mScoreFragBinding.getRoot().findViewById(R.id.logicErrorB);
         logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
 
-        Button virusAttackA = mScoreFragBinding.getRoot().findViewById(R.id.virusAttackA);
         virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
 
-        Button virusAttackB = mScoreFragBinding.getRoot().findViewById(R.id.virusAttackB);
         virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
 
         // Inflate the layout for this fragment
