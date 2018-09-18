@@ -28,6 +28,10 @@ import android.widget.Button;
 import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.databinding.TimerFragBinding;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +41,13 @@ public class TimerFragment extends Fragment {
     private ConfigurationViewModel mConfigurationViewModel;
 
     private TimerFragBinding mTimerFragBinding;
+
+    @BindView(R.id.startPauseButton)
+    Button startPauseB;
+    @BindView(R.id.newProgram)
+    Button resetGameB;
+
+    private Unbinder unbinder;
 
     public TimerFragment() {
         // Required empty public constructor
@@ -56,18 +67,22 @@ public class TimerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mTimerFragBinding = TimerFragBinding.inflate(inflater, container, false);
+        unbinder = ButterKnife.bind(this, mTimerFragBinding.getRoot());
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mTimerFragBinding.setViewModel(mConfigurationViewModel);
         mTimerFragBinding.setLifecycleOwner(this);
 
-        Button startPauseB = mTimerFragBinding.getRoot().findViewById(R.id.startPauseButton);
         startPauseB.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
 
-        Button resetGameB = mTimerFragBinding.getRoot().findViewById(R.id.newProgram);
         resetGameB.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
 
         // Inflate the layout for this fragment
         return mTimerFragBinding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
 }
