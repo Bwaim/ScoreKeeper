@@ -61,12 +61,6 @@ public class ScoreFragment extends Fragment {
         return new ScoreFragment();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mConfigurationViewModel.start();
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,

@@ -64,10 +64,6 @@ public class ConfigurationViewModel extends AndroidViewModel {
         startPauseButtonLabel.setValue(getApplication().getString(R.string.start));
     }
 
-    public void start() {
-        loadConfiguration();
-    }
-
     @VisibleForTesting
     public void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);

@@ -58,12 +58,6 @@ public class TimerFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mConfigurationViewModel.start();
-    }
-
-    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mTimerFragBinding = TimerFragBinding.inflate(inflater, container, false);
