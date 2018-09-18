@@ -38,6 +38,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     public final long TIMER_INTERVAL = 1000;
 
+    private final String TIMER_FORMAT = "%02d:%02d";
+
     private final ConfigurationRepository mConfigurationRepository;
 
     public final MutableLiveData<Configuration> mConfigurationLiveData = new MutableLiveData<>();
@@ -76,7 +78,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
     @VisibleForTesting
     public void updateTime() {
         Long time = getTime();
-        mTime.setValue(String.format(Locale.getDefault(), "%02d:%02d",
+        mTime.setValue(String.format(Locale.getDefault(), TIMER_FORMAT,
                 TimeUnit.MILLISECONDS.toMinutes(time),
                 TimeUnit.MILLISECONDS.toSeconds(time) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))));
