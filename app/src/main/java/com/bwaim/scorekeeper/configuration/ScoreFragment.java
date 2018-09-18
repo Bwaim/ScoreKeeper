@@ -30,6 +30,7 @@ import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class ScoreFragment extends Fragment {
 
@@ -50,6 +51,8 @@ public class ScoreFragment extends Fragment {
     @BindView(R.id.virusAttackB)
     Button virusAttackB;
 
+    private Unbinder unbinder;
+
     public ScoreFragment() {
         // Required empty public constructor
     }
@@ -69,7 +72,7 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
-        ButterKnife.bind(this, mScoreFragBinding.getRoot());
+        unbinder = ButterKnife.bind(this, mScoreFragBinding.getRoot());
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mScoreFragBinding.setViewModel(mConfigurationViewModel);
         mScoreFragBinding.setLifecycleOwner(this);
@@ -88,5 +91,11 @@ public class ScoreFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return mScoreFragBinding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
