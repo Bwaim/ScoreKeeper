@@ -82,6 +82,9 @@ public class ConfigurationViewModel extends AndroidViewModel {
                 TimeUnit.MILLISECONDS.toMinutes(time),
                 TimeUnit.MILLISECONDS.toSeconds(time) -
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))));
+        if (time == 0) {
+            displayWinner();
+        }
     }
 
     public void startTimer() {
@@ -178,9 +181,12 @@ public class ConfigurationViewModel extends AndroidViewModel {
     public void displayWinner() {
         checkNotNull(mConfigurationLiveData.getValue());
         Configuration config = mConfigurationLiveData.getValue();
-        mTime.setValue(config.getScoreA() == 0
+        int scoreA = config.getScoreA();
+        int scoreB = config.getScoreB();
+        mTime.setValue(scoreA < scoreB
                 ? getApplication().getString(R.string.resultWin, config.getNameA())
-                : getApplication().getString(R.string.resultWin, config.getNameB()));
+                : scoreB < scoreA ? getApplication().getString(R.string.resultWin, config.getNameB())
+                : getApplication().getString(R.string.draw));
     }
 
     private void resetScore() {

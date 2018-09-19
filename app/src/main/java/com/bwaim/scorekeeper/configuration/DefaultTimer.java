@@ -58,7 +58,7 @@ public class DefaultTimer implements ConfigurationViewModel.MyCountDownTimer {
             }
 
             public void onFinish() {
-                // Nothing for the moment
+                mViewModel.setTime(0);
             }
         };
     }
