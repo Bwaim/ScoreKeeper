@@ -320,6 +320,17 @@ public class ConfigurationViewModelTest {
         assertEquals(TEAM_A_WIN, mConfigurationViewModel.mTime.getValue());
     }
 
+    @Test
+    public void updateTime_0DisplayWinner() {
+        checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
+        Configuration config = mConfigurationViewModel.mConfigurationLiveData.getValue();
+        config.setScoreA(15);
+        config.setScoreB(25);
+        mConfigurationViewModel.setTime(0);
+
+        assertEquals(TEAM_A_WIN, mConfigurationViewModel.mTime.getValue());
+    }
+
     @RunWith(Parameterized.class)
     public static class ConfigurationViewModelParameterizedTest {
 
