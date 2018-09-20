@@ -23,35 +23,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class ScoreFragment extends Fragment {
 
     private ConfigurationViewModel mConfigurationViewModel;
 
     private ScoreFragBinding mScoreFragBinding;
-
-    @BindView(R.id.syntaxErrorA)
-    Button syntaxErrorA;
-    @BindView(R.id.syntaxErrorB)
-    Button syntaxErrorB;
-    @BindView(R.id.logicErrorA)
-    Button logicErrorA;
-    @BindView(R.id.logicErrorB)
-    Button logicErrorB;
-    @BindView(R.id.virusAttackA)
-    Button virusAttackA;
-    @BindView(R.id.virusAttackB)
-    Button virusAttackB;
-
-    private Unbinder unbinder;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -66,30 +45,23 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
-        unbinder = ButterKnife.bind(this, mScoreFragBinding.getRoot());
         mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mScoreFragBinding.setViewModel(mConfigurationViewModel);
         mScoreFragBinding.setLifecycleOwner(this);
 
-        syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
+        mScoreFragBinding.syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
 
-        syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
+        mScoreFragBinding.syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
 
-        logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
+        mScoreFragBinding.logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
 
-        logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
+        mScoreFragBinding.logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
 
-        virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
+        mScoreFragBinding.virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
 
-        virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
+        mScoreFragBinding.virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
 
         // Inflate the layout for this fragment
         return mScoreFragBinding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 }
