@@ -64,7 +64,10 @@ dependencies {
     implementation "com.android.support.constraint:constraint-layout:$constraint_layout"
     implementation "com.google.guava:guava:$guavaVersion"
     implementation "com.google.dagger:dagger:$daggerVersion"
+    implementation "com.google.dagger:dagger-android:$daggerVersion"
+    implementation "com.google.dagger:dagger-android-support:$daggerVersion" // if you use the support libraries
     annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
 
     // Architecture Components
     implementation "android.arch.lifecycle:extensions:$archLifecycleVersion"
