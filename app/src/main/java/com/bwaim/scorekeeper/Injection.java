@@ -16,7 +16,6 @@
 
 package com.bwaim.scorekeeper;
 
-import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
 /**
@@ -26,6 +25,7 @@ import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 public class Injection {
 
     public static ConfigurationRepository provideConfigurationRepository() {
-        return ConfigurationRepository.getInstance(new Configuration());
+//        return ConfigurationRepository.getInstance(new Configuration());
+        return null;
     }
 }

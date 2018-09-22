@@ -16,10 +16,13 @@
 
 package com.bwaim.scorekeeper.data;
 
+import javax.inject.Singleton;
+
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
+@Singleton
 public class Configuration {
 
     // Players information
