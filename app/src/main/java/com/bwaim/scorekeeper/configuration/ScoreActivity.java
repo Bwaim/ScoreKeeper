@@ -16,25 +16,14 @@
 
 package com.bwaim.scorekeeper.configuration;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 
 import com.bwaim.scorekeeper.R;
-import com.bwaim.scorekeeper.ViewModelFactory;
 import com.bwaim.scorekeeper.util.ActivityUtils;
 
-public class ScoreActivity extends AppCompatActivity {
+import dagger.android.support.DaggerAppCompatActivity;
 
-    private ConfigurationViewModel mConfigurationViewModel;
-
-    public static ConfigurationViewModel obtainViewModel(FragmentActivity activity) {
-        // Use a Factory to inject dependencies into the ViewModel
-        ViewModelFactory factory = ViewModelFactory.getInstance(activity.getApplication());
-
-        return ViewModelProviders.of(activity, factory).get(ConfigurationViewModel.class);
-    }
+public class ScoreActivity extends DaggerAppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +31,6 @@ public class ScoreActivity extends AppCompatActivity {
         setContentView(R.layout.score_act);
 
         setupViewFragment();
-
-        mConfigurationViewModel = obtainViewModel(this);
     }
 
     private void setupViewFragment() {

@@ -19,19 +19,26 @@ package com.bwaim.scorekeeper.configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
+import com.bwaim.scorekeeper.di.ActivityScoped;
 
-public class ScoreFragment extends Fragment {
+import javax.inject.Inject;
 
-    private ConfigurationViewModel mConfigurationViewModel;
+import dagger.android.support.DaggerFragment;
+
+@ActivityScoped
+public class ScoreFragment extends DaggerFragment {
+
+    @Inject
+    ConfigurationViewModel mConfigurationViewModel;
 
     private ScoreFragBinding mScoreFragBinding;
 
+    @Inject
     public ScoreFragment() {
         // Required empty public constructor
     }
@@ -45,7 +52,6 @@ public class ScoreFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
-        mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mScoreFragBinding.setViewModel(mConfigurationViewModel);
         mScoreFragBinding.setLifecycleOwner(this);
 

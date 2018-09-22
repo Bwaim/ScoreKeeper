@@ -28,12 +28,16 @@ import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
+@Singleton
 public class ConfigurationViewModel extends AndroidViewModel {
 
     public final long TIMER_INTERVAL = 1000;
@@ -52,6 +56,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private boolean isStarted;
 
+    @Inject
     public ConfigurationViewModel(Application app, ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
         super(app);

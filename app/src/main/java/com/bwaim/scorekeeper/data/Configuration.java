@@ -16,6 +16,7 @@
 
 package com.bwaim.scorekeeper.data;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 /**
@@ -39,6 +40,7 @@ public class Configuration {
     private long initialTime;
     private long time;
 
+    @Inject
     public Configuration() {
         nameA = "Toto";
         nameB = "Coder B";

@@ -25,17 +25,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bwaim.scorekeeper.databinding.TimerFragBinding;
+import com.bwaim.scorekeeper.di.ActivityScoped;
+
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TimerFragment extends Fragment {
+@ActivityScoped
+public class TimerFragment extends DaggerFragment {
 
-    private ConfigurationViewModel mConfigurationViewModel;
+    @Inject
+    ConfigurationViewModel mConfigurationViewModel;
 
     private TimerFragBinding mTimerFragBinding;
 
+    @Inject
     public TimerFragment() {
         // Required empty public constructor
     }
@@ -48,7 +56,6 @@ public class TimerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mTimerFragBinding = TimerFragBinding.inflate(inflater, container, false);
-        mConfigurationViewModel = ScoreActivity.obtainViewModel(getActivity());
         mTimerFragBinding.setViewModel(mConfigurationViewModel);
         mTimerFragBinding.setLifecycleOwner(this);
 
