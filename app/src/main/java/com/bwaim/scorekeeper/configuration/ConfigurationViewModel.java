@@ -54,7 +54,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
 
     private MyCountDownTimer mCountDownTimer;
 
-    private boolean isStarted;
+    @VisibleForTesting
+    public boolean isStarted;
 
     @Inject
     public ConfigurationViewModel(Application app, ConfigurationRepository repository
@@ -66,7 +67,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
         init();
     }
 
-    private void init() {
+    @VisibleForTesting
+    public void init() {
         isStarted = false;
         startPauseButtonLabel.setValue(getApplication().getString(R.string.start));
     }

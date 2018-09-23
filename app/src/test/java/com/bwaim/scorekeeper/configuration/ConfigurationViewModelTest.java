@@ -23,7 +23,6 @@ import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationDataSource.LoadConfigurationCallback;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
-import com.bwaim.scorekeeper.mock.MockTimer;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,12 +32,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.assertEquals;
@@ -56,7 +57,7 @@ import static org.mockito.Mockito.when;
  */
 public class ConfigurationViewModelTest {
 
-    private final static String NAME_A = "Team A";
+    private final static String NAME_A = "Toto A";
     private final static String NAME_B = "Team B";
     private final static int INITIAL_SCORE = 30;
     private final static int SYNTAX_ERROR = 1;
@@ -82,9 +83,11 @@ public class ConfigurationViewModelTest {
     @Captor
     private ArgumentCaptor<LoadConfigurationCallback> mLoadConfigurationCallbackCaptor;
 
-    private ConfigurationViewModel mConfigurationViewModel;
+    @Mock
+    private DefaultTimer mockTimer;
 
-    private MockTimer mockTimer;
+    @InjectMocks
+    private ConfigurationViewModel mConfigurationViewModel;
 
     @Before
     public void setupConfigurationViewModel() {
@@ -94,10 +97,8 @@ public class ConfigurationViewModelTest {
 
         config = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
                 , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
-        mockTimer = new MockTimer(INITIAL_TIME);
 
-        mConfigurationViewModel = new ConfigurationViewModel(mContext
-                , mConfigurationRepository, mockTimer);
+        mConfigurationViewModel.init();
 
         verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
         mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(config);
@@ -112,6 +113,13 @@ public class ConfigurationViewModelTest {
                 .thenReturn("pause");
         when(mContext.getString(eq(R.string.resultWin), any(String.class)))
                 .thenReturn(TEAM_A_WIN);
+    }
+
+    private void simulateOnTick() {
+        if (mConfigurationViewModel.isStarted) {
+            mConfigurationViewModel.setTime((mConfigurationViewModel.getTime())
+                    - TimeUnit.SECONDS.toMillis(1));
+        }
     }
 
     @After
@@ -154,14 +162,14 @@ public class ConfigurationViewModelTest {
 
         mConfigurationViewModel.startTimer();
 
-        mockTimer.simulateOnTick();
+        simulateOnTick();
         String time1 = mConfigurationViewModel.mTime.getValue();
         long time1inMillis = sdf.parse(time1).getTime();
-        mockTimer.simulateOnTick();
+        simulateOnTick();
         String time2 = mConfigurationViewModel.mTime.getValue();
         long time2inMillis = sdf.parse(time2).getTime();
 
-        assertTrue(time1inMillis > time2inMillis);
+        assertTrue(time1 + " > " + time2, time1inMillis > time2inMillis);
     }
 
     @Test
@@ -186,11 +194,11 @@ public class ConfigurationViewModelTest {
 
         mConfigurationViewModel.startTimer();
 
-        mockTimer.simulateOnTick();
+        simulateOnTick();
         mConfigurationViewModel.startTimer();
         String time1 = mConfigurationViewModel.mTime.getValue();
         long time1inMillis = sdf.parse(time1).getTime();
-        mockTimer.simulateOnTick();
+        simulateOnTick();
         String time2 = mConfigurationViewModel.mTime.getValue();
         long time2inMillis = sdf.parse(time2).getTime();
 
@@ -204,8 +212,8 @@ public class ConfigurationViewModelTest {
         String initialTime = mConfigurationViewModel.mTime.getValue();
 
         mConfigurationViewModel.startTimer();
-        mockTimer.simulateOnTick();
-        mockTimer.simulateOnTick();
+        simulateOnTick();
+        simulateOnTick();
         mConfigurationViewModel.resetGame();
 
         assertEquals(buttonLabel, mConfigurationViewModel.startPauseButtonLabel.getValue());

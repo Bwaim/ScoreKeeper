@@ -18,9 +18,9 @@ package com.bwaim.scorekeeper.data.source;
 
 import com.bwaim.scorekeeper.data.Configuration;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -41,9 +41,11 @@ public class ConfigurationRepositoryTest {
     private final static int VIRUS_ATTACK = 5;
     private final static int INITIAL_TIME = 60;
 
+    @Mock
     private static Configuration CONFIG = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
             , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
 
+    @InjectMocks
     private ConfigurationRepository mConfigurationRepository;
 
     @Mock
@@ -52,13 +54,6 @@ public class ConfigurationRepositoryTest {
     @Before
     public void setupConfigurationRepository() {
         MockitoAnnotations.initMocks(this);
-
-        mConfigurationRepository = ConfigurationRepository.getInstance(CONFIG);
-    }
-
-    @After
-    public void destroyRepositoryInstance() {
-        ConfigurationRepository.destroyInstance();
     }
 
     @Test
