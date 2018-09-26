@@ -32,10 +32,9 @@ import dagger.android.support.AndroidSupportInjectionModule;
  * <p>
  */
 @Singleton
-@Component(modules = {ViewModelModule.class,
+@Component(modules = {AndroidSupportInjectionModule.class,
         ApplicationModule.class,
-        ActivityBindingModule.class,
-        AndroidSupportInjectionModule.class})
+        ActivityBindingModule.class})
 public interface AppComponent extends AndroidInjector<ScoreKeeperApplication> {
 
     @Component.Builder

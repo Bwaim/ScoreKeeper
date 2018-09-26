@@ -16,27 +16,30 @@
 
 package com.bwaim.scorekeeper.configuration;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
 import com.bwaim.scorekeeper.di.ActivityScoped;
+import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
 
-import dagger.android.support.DaggerFragment;
-
 @ActivityScoped
-public class ScoreFragment extends DaggerFragment {
+public class ScoreFragment extends Fragment implements Injectable {
 
-    @Inject
+    //@Inject
+    ViewModelProvider.Factory viewModelFactory;
+
     ConfigurationViewModel mConfigurationViewModel;
 
-    private ScoreFragBinding mScoreFragBinding;
+//    private ScoreFragBinding mScoreFragBinding;
 
     @Inject
     public ScoreFragment() {
@@ -51,23 +54,31 @@ public class ScoreFragment extends DaggerFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
-        mScoreFragBinding.setViewModel(mConfigurationViewModel);
-        mScoreFragBinding.setLifecycleOwner(this);
+//        mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
+//        mScoreFragBinding.setViewModel(mConfigurationViewModel);
+//        mScoreFragBinding.setLifecycleOwner(this);
+//
+//        mScoreFragBinding.syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
+//
+//        mScoreFragBinding.syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
+//
+//        mScoreFragBinding.logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
+//
+//        mScoreFragBinding.logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
+//
+//        mScoreFragBinding.virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
+//
+//        mScoreFragBinding.virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
+//
+//        // Inflate the layout for this fragment
+//        return mScoreFragBinding.getRoot();
+        return null;
+    }
 
-        mScoreFragBinding.syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
-
-        mScoreFragBinding.syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
-
-        mScoreFragBinding.logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
-
-        mScoreFragBinding.logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
-
-        mScoreFragBinding.virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
-
-        mScoreFragBinding.virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
-
-        // Inflate the layout for this fragment
-        return mScoreFragBinding.getRoot();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mConfigurationViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ConfigurationViewModel.class);
     }
 }

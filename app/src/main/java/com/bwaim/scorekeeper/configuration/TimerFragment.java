@@ -17,28 +17,31 @@
 package com.bwaim.scorekeeper.configuration;
 
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bwaim.scorekeeper.databinding.TimerFragBinding;
 import com.bwaim.scorekeeper.di.ActivityScoped;
+import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
-
-import dagger.android.support.DaggerFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 @ActivityScoped
-public class TimerFragment extends DaggerFragment {
+public class TimerFragment extends Fragment implements Injectable {
 
     @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
     ConfigurationViewModel mConfigurationViewModel;
 
     private TimerFragBinding mTimerFragBinding;
@@ -56,6 +59,12 @@ public class TimerFragment extends DaggerFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mTimerFragBinding = TimerFragBinding.inflate(inflater, container, false);
+//        mTimerFragBinding = DataBindingUtil.inflate(
+//                inflater,
+//                R.layout.timer_frag,
+//                container,
+//                false
+//        );
         mTimerFragBinding.setViewModel(mConfigurationViewModel);
         mTimerFragBinding.setLifecycleOwner(this);
 
@@ -65,5 +74,13 @@ public class TimerFragment extends DaggerFragment {
 
         // Inflate the layout for this fragment
         return mTimerFragBinding.getRoot();
+//        return null;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        mConfigurationViewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ConfigurationViewModel.class);
     }
 }

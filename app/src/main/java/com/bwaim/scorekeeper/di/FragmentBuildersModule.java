@@ -16,7 +16,8 @@
 
 package com.bwaim.scorekeeper.di;
 
-import com.bwaim.scorekeeper.ScoreActivity;
+import com.bwaim.scorekeeper.configuration.ScoreFragment;
+import com.bwaim.scorekeeper.configuration.TimerFragment;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
@@ -26,9 +27,12 @@ import dagger.android.ContributesAndroidInjector;
  * <p>
  */
 @Module
-abstract class ActivityBindingModule {
+public abstract class FragmentBuildersModule {
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract ScoreFragment contributeScoreFragment();
 
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract ScoreActivity contributeScoreActivity();
+    @FragmentScoped
+    @ContributesAndroidInjector
+    abstract TimerFragment contributeTimerFragment();
 }

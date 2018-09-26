@@ -23,10 +23,8 @@ import android.support.test.runner.AndroidJUnit4;
 import android.widget.TextView;
 
 import com.bwaim.scorekeeper.R;
-import com.bwaim.scorekeeper.ViewModelFactory;
-import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
+import com.bwaim.scorekeeper.ScoreActivity;
 
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -63,11 +61,11 @@ public class ScoreScreenTest {
     public ActivityTestRule<ScoreActivity> mScoreActivityTestRule =
             new ActivityTestRule<>(ScoreActivity.class);
 
-    @Before
-    public void resetState() {
-        ViewModelFactory.destroyInstance();
-        ConfigurationRepository.destroyInstance();
-    }
+//    @Before
+//    public void resetState() {
+//        ScoreKeeperViewModelFactory.destroyInstance();
+//        ConfigurationRepository.destroyInstance();
+//    }
 
     @Test
     public void initialState() {

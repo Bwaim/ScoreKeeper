@@ -16,18 +16,14 @@
 
 package com.bwaim.scorekeeper.di;
 
-import android.app.Application;
-import android.content.Context;
+import com.bwaim.scorekeeper.configuration.ConfigurationViewModelModule;
 
-import dagger.Binds;
 import dagger.Module;
 
 /**
  * Created by Fabien Boismoreau on 22/09/2018.
  * <p>
  */
-@Module()
+@Module(includes = {ViewModelModule.class, ConfigurationViewModelModule.class})
 abstract class ApplicationModule {
-    @Binds
-    abstract Context bindContext(Application application);
 }

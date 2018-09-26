@@ -14,16 +14,26 @@
  *    limitations under the License.
  */
 
-package com.bwaim.scorekeeper.configuration;
+package com.bwaim.scorekeeper;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 
-import com.bwaim.scorekeeper.R;
+import com.bwaim.scorekeeper.configuration.ScoreFragment;
+import com.bwaim.scorekeeper.configuration.TimerFragment;
 import com.bwaim.scorekeeper.util.ActivityUtils;
 
-import dagger.android.support.DaggerAppCompatActivity;
+import javax.inject.Inject;
 
-public class ScoreActivity extends DaggerAppCompatActivity {
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+
+public class ScoreActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +41,11 @@ public class ScoreActivity extends DaggerAppCompatActivity {
         setContentView(R.layout.score_act);
 
         setupViewFragment();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 
     private void setupViewFragment() {

@@ -16,19 +16,34 @@
 
 package com.bwaim.scorekeeper;
 
-import com.bwaim.scorekeeper.di.DaggerAppComponent;
+import android.app.Activity;
+import android.app.Application;
+
+import com.bwaim.scorekeeper.di.AppInjector;
+
+import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
-import dagger.android.support.DaggerApplication;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.HasActivityInjector;
 
 /**
  * Created by Fabien Boismoreau on 22/09/2018.
  * <p>
  */
-public class ScoreKeeperApplication extends DaggerApplication {
+public class ScoreKeeperApplication extends Application implements HasActivityInjector {
+
+    @Inject
+    DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
 
     @Override
-    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-        return DaggerAppComponent.builder().application(this).build();
+    public void onCreate() {
+        super.onCreate();
+        AppInjector.init(this);
+    }
+
+    @Override
+    public AndroidInjector<Activity> activityInjector() {
+        return dispatchingAndroidInjector;
     }
 }

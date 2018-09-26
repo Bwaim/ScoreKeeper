@@ -16,28 +16,28 @@
 
 package com.bwaim.scorekeeper.di;
 
-import android.app.Application;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 
 import com.bwaim.scorekeeper.configuration.ConfigurationViewModel;
-import com.bwaim.scorekeeper.configuration.ConfigurationViewModelModule;
-import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
+import com.bwaim.scorekeeper.viewmodel.ScoreKeeperViewModelFactory;
 
-import javax.inject.Singleton;
-
+import dagger.Binds;
 import dagger.Module;
-import dagger.Provides;
+import dagger.multibindings.IntoMap;
 
 /**
  * Created by Fabien Boismoreau on 22/09/2018.
  * <p>
  */
-@Module(includes = ConfigurationViewModelModule.class)
-public class ViewModelModule {
-    @Provides
-    @Singleton
-    static ConfigurationViewModel configurationViewModel(Application app
-            , ConfigurationRepository repository
-            , ConfigurationViewModel.MyCountDownTimer countDownTimer) {
-        return new ConfigurationViewModel(app, repository, countDownTimer);
-    }
+@Module()
+abstract class ViewModelModule {
+    @Binds
+    @IntoMap
+    @ViewModelKey(ConfigurationViewModel.class)
+    abstract ViewModel bindConfigurationViewModel(
+            ConfigurationViewModel configurationViewModel);
+
+    @Binds
+    abstract ViewModelProvider.Factory bindViewModelFactory(ScoreKeeperViewModelFactory factory);
 }

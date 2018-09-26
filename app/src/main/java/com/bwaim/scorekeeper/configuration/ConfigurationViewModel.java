@@ -16,12 +16,10 @@
 
 package com.bwaim.scorekeeper.configuration;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
 
-import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
@@ -38,7 +36,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * <p>
  */
 @Singleton
-public class ConfigurationViewModel extends AndroidViewModel {
+public class ConfigurationViewModel extends ViewModel {
 
     public final long TIMER_INTERVAL = 1000;
 
@@ -58,9 +56,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
     public boolean isStarted;
 
     @Inject
-    public ConfigurationViewModel(Application app, ConfigurationRepository repository
+    public ConfigurationViewModel(ConfigurationRepository repository
             , MyCountDownTimer countDownTimer) {
-        super(app);
         mConfigurationRepository = repository;
         mCountDownTimer = countDownTimer;
         loadConfiguration();
@@ -70,7 +67,7 @@ public class ConfigurationViewModel extends AndroidViewModel {
     @VisibleForTesting
     public void init() {
         isStarted = false;
-        startPauseButtonLabel.setValue(getApplication().getString(R.string.start));
+        startPauseButtonLabel.setValue("start");
     }
 
     @VisibleForTesting
@@ -191,9 +188,9 @@ public class ConfigurationViewModel extends AndroidViewModel {
         int scoreA = config.getScoreA();
         int scoreB = config.getScoreB();
         mTime.setValue(scoreA < scoreB
-                ? getApplication().getString(R.string.resultWin, config.getNameA())
-                : scoreB < scoreA ? getApplication().getString(R.string.resultWin, config.getNameB())
-                : getApplication().getString(R.string.draw));
+                ? "WinA"
+                : scoreB < scoreA ? "WinB"
+                : "Draw");
     }
 
     private void resetScore() {
@@ -206,8 +203,8 @@ public class ConfigurationViewModel extends AndroidViewModel {
     }
 
     private void updateStartPauseLabel() {
-        startPauseButtonLabel.setValue(isStarted ? getApplication().getString(R.string.pause)
-                : getApplication().getString(R.string.start));
+        startPauseButtonLabel.setValue(isStarted ? "pause"
+                : "start");
     }
 
     public interface MyCountDownTimer {

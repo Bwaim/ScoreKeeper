@@ -16,19 +16,24 @@
 
 package com.bwaim.scorekeeper.di;
 
-import com.bwaim.scorekeeper.ScoreActivity;
+import android.arch.lifecycle.ViewModel;
 
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import dagger.MapKey;
 
 /**
- * Created by Fabien Boismoreau on 22/09/2018.
+ * Created by Fabien Boismoreau on 25/09/2018.
  * <p>
  */
-@Module
-abstract class ActivityBindingModule {
-
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract ScoreActivity contributeScoreActivity();
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@MapKey
+public @interface ViewModelKey {
+    Class<? extends ViewModel> value();
 }

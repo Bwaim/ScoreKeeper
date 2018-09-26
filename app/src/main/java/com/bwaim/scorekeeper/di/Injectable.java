@@ -16,19 +16,9 @@
 
 package com.bwaim.scorekeeper.di;
 
-import com.bwaim.scorekeeper.ScoreActivity;
-
-import dagger.Module;
-import dagger.android.ContributesAndroidInjector;
-
 /**
- * Created by Fabien Boismoreau on 22/09/2018.
+ * Created by Fabien Boismoreau on 26/09/2018.
  * <p>
  */
-@Module
-abstract class ActivityBindingModule {
-
-    @ActivityScoped
-    @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
-    abstract ScoreActivity contributeScoreActivity();
+public interface Injectable {
 }

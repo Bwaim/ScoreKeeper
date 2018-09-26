@@ -24,7 +24,7 @@
         android:supportsRtl="true"
         android:name=".ScoreKeeperApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".configuration.ScoreActivity">
+        <activity android:name=".ScoreActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
