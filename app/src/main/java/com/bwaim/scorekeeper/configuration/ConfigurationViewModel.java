@@ -38,7 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @Singleton
 public class ConfigurationViewModel extends ViewModel {
 
-    public final long TIMER_INTERVAL = 1000;
+    final long TIMER_INTERVAL = 1000;
 
     private final String TIMER_FORMAT = "%02d:%02d";
 
@@ -56,27 +56,26 @@ public class ConfigurationViewModel extends ViewModel {
     public boolean isStarted;
 
     @Inject
-    public ConfigurationViewModel(ConfigurationRepository repository
-            , MyCountDownTimer countDownTimer) {
+    public ConfigurationViewModel(ConfigurationRepository repository) {
         mConfigurationRepository = repository;
-        mCountDownTimer = countDownTimer;
-        loadConfiguration();
-        init();
     }
 
-    @VisibleForTesting
+    public void setCountDownTimer(MyCountDownTimer timer) {
+        mCountDownTimer = timer;
+    }
+
     public void init() {
         isStarted = false;
         startPauseButtonLabel.setValue("start");
+        loadConfiguration();
     }
 
-    @VisibleForTesting
-    public void loadConfiguration() {
+    private void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
-        if (mConfigurationLiveData.getValue() != null) {
+//        if (mConfigurationLiveData.getValue() != null) {
             updateTime();
             mCountDownTimer.attach(this);
-        }
+//        }
     }
 
     @VisibleForTesting

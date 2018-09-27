@@ -27,12 +27,10 @@ import dagger.android.ContributesAndroidInjector;
  * <p>
  */
 @Module
-public abstract class FragmentBuildersModule {
-    @FragmentScoped
+abstract class FragmentBuildersModule {
     @ContributesAndroidInjector
     abstract ScoreFragment contributeScoreFragment();
 
-    @FragmentScoped
     @ContributesAndroidInjector
     abstract TimerFragment contributeTimerFragment();
 }

@@ -30,13 +30,12 @@ import dagger.multibindings.IntoMap;
  * Created by Fabien Boismoreau on 22/09/2018.
  * <p>
  */
-@Module()
+@Module
 abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(ConfigurationViewModel.class)
-    abstract ViewModel bindConfigurationViewModel(
-            ConfigurationViewModel configurationViewModel);
+    abstract ViewModel bindConfigurationViewModel(ConfigurationViewModel configurationViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(ScoreKeeperViewModelFactory factory);

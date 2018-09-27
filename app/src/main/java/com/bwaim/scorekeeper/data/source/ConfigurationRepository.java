@@ -20,41 +20,22 @@ import android.support.annotation.NonNull;
 
 import com.bwaim.scorekeeper.data.Configuration;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by Fabien Boismoreau on 30/08/2018.
  * <p>
  */
-@Singleton
 public class ConfigurationRepository implements ConfigurationDataSource {
 
-    private volatile static ConfigurationRepository INSTANCE = null;
+    private Configuration mConfiguration;
 
-    private final Configuration mConfiguration;
-
-    @Inject
-    ConfigurationRepository(Configuration config) {
-        mConfiguration = config;
+    public ConfigurationRepository() {
     }
 
-//    public static ConfigurationRepository getInstance(Configuration config) {
-//        if (INSTANCE == null) {
-//            synchronized (ConfigurationRepository.class) {
-//                if (INSTANCE == null) {
-//                    INSTANCE = new ConfigurationRepository(config);
-//                }
-//            }
-//        }
-//        return INSTANCE;
-//    }
-
-//    public static void destroyInstance() {
-//        INSTANCE = null;
-//    }
+    public void setConfiguration(Configuration config) {
+        mConfiguration = config;
+    }
 
     @Override
     public void getConfiguration(@NonNull final LoadConfigurationCallback callback) {

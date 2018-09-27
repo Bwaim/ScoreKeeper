@@ -27,7 +27,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bwaim.scorekeeper.di.ActivityScoped;
 import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
@@ -36,7 +35,6 @@ import javax.inject.Inject;
 /**
  * A simple {@link Fragment} subclass.
  */
-@ActivityScoped
 public class TimerFragment extends Fragment implements Injectable {
 
     @Inject
@@ -46,7 +44,6 @@ public class TimerFragment extends Fragment implements Injectable {
 
     private TimerFragBinding mTimerFragBinding;
 
-    @Inject
     public TimerFragment() {
         // Required empty public constructor
     }
@@ -65,16 +62,16 @@ public class TimerFragment extends Fragment implements Injectable {
 //                container,
 //                false
 //        );
-        mTimerFragBinding.setViewModel(mConfigurationViewModel);
-        mTimerFragBinding.setLifecycleOwner(this);
+//        mTimerFragBinding.setViewModelConfiguration(mConfigurationViewModel);
+//        mTimerFragBinding.setLifecycleOwner(this);
 
-        mTimerFragBinding.startPauseButton.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
-
-        mTimerFragBinding.newProgram.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
+//        mTimerFragBinding.startPauseButton.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
+//
+//        mTimerFragBinding.newProgram.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
 
         // Inflate the layout for this fragment
-        return mTimerFragBinding.getRoot();
-//        return null;
+//        return mTimerFragBinding.getRoot();
+        return null;
     }
 
     @Override
@@ -82,5 +79,7 @@ public class TimerFragment extends Fragment implements Injectable {
         super.onActivityCreated(savedInstanceState);
         mConfigurationViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ConfigurationViewModel.class);
+        mConfigurationViewModel.setCountDownTimer(new DefaultTimer());
+        mConfigurationViewModel.init();
     }
 }

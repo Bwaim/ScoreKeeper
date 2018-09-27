@@ -28,7 +28,6 @@ import dagger.android.ContributesAndroidInjector;
 @Module
 abstract class ActivityBindingModule {
 
-    @ActivityScoped
     @ContributesAndroidInjector(modules = FragmentBuildersModule.class)
     abstract ScoreActivity contributeScoreActivity();
 }

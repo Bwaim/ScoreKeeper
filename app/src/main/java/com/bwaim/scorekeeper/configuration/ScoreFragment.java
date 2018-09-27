@@ -26,22 +26,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bwaim.scorekeeper.di.ActivityScoped;
 import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
 
-@ActivityScoped
 public class ScoreFragment extends Fragment implements Injectable {
 
-    //@Inject
+    @Inject
     ViewModelProvider.Factory viewModelFactory;
 
     ConfigurationViewModel mConfigurationViewModel;
 
 //    private ScoreFragBinding mScoreFragBinding;
 
-    @Inject
     public ScoreFragment() {
         // Required empty public constructor
     }

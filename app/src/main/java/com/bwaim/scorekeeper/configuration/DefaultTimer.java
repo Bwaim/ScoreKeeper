@@ -18,16 +18,11 @@ package com.bwaim.scorekeeper.configuration;
 
 import android.os.CountDownTimer;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
-@Singleton
 public class DefaultTimer implements ConfigurationViewModel.MyCountDownTimer {
 
     private CountDownTimer mCountDownTimer;
     private ConfigurationViewModel mViewModel;
 
-    @Inject
     public DefaultTimer() {
     }
 

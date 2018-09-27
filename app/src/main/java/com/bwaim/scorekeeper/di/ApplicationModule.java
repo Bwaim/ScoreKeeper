@@ -16,14 +16,25 @@
 
 package com.bwaim.scorekeeper.di;
 
-import com.bwaim.scorekeeper.configuration.ConfigurationViewModelModule;
+import com.bwaim.scorekeeper.data.Configuration;
+import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
+
+import javax.inject.Singleton;
 
 import dagger.Module;
+import dagger.Provides;
 
 /**
  * Created by Fabien Boismoreau on 22/09/2018.
  * <p>
  */
-@Module(includes = {ViewModelModule.class, ConfigurationViewModelModule.class})
-abstract class ApplicationModule {
+@Module(includes = {ViewModelModule.class})
+class ApplicationModule {
+    @Singleton
+    @Provides
+    ConfigurationRepository provideConfigurationRepository() {
+        ConfigurationRepository repo = new ConfigurationRepository();
+        repo.setConfiguration(new Configuration());
+        return repo;
+    }
 }

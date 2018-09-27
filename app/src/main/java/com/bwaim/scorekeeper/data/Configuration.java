@@ -16,14 +16,10 @@
 
 package com.bwaim.scorekeeper.data;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 /**
  * Created by Fabien Boismoreau on 29/08/2018.
  * <p>
  */
-@Singleton
 public class Configuration {
 
     // Players information
@@ -40,7 +36,6 @@ public class Configuration {
     private long initialTime;
     private long time;
 
-    @Inject
     public Configuration() {
         nameA = "Toto";
         nameB = "Coder B";
