@@ -27,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bwaim.scorekeeper.databinding.TimerFragBinding;
 import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
@@ -63,15 +64,15 @@ public class TimerFragment extends Fragment implements Injectable {
 //                false
 //        );
 //        mTimerFragBinding.setViewModelConfiguration(mConfigurationViewModel);
-//        mTimerFragBinding.setLifecycleOwner(this);
+        mTimerFragBinding.setLifecycleOwner(this);
 
 //        mTimerFragBinding.startPauseButton.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
 //
 //        mTimerFragBinding.newProgram.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
 
         // Inflate the layout for this fragment
-//        return mTimerFragBinding.getRoot();
-        return null;
+        return mTimerFragBinding.getRoot();
+//        return null;
     }
 
     @Override
@@ -81,5 +82,9 @@ public class TimerFragment extends Fragment implements Injectable {
                 .get(ConfigurationViewModel.class);
         mConfigurationViewModel.setCountDownTimer(new DefaultTimer());
         mConfigurationViewModel.init();
+
+        mTimerFragBinding.setViewModelConfiguration(mConfigurationViewModel);
+        mTimerFragBinding.startPauseButton.setOnClickListener((View v) -> mConfigurationViewModel.startTimer());
+        mTimerFragBinding.newProgram.setOnClickListener((View v) -> mConfigurationViewModel.resetGame());
     }
 }

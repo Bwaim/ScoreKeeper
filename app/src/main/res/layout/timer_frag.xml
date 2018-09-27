@@ -21,16 +21,9 @@
 
     <data>
 
-        <!--<variable-->
-        <!--name="viewModelConfiguration"-->
-        <!--type="com.bwaim.scorekeeper.configuration.ConfigurationViewModel" />-->
         <variable
-            name="time"
-            type="String" />
-
-        <variable
-            name="startPauseButtonLabel"
-            type="String" />
+            name="viewModelConfiguration"
+            type="com.bwaim.scorekeeper.configuration.ConfigurationViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -48,7 +41,7 @@
             android:layout_marginTop="@dimen/layoutMargin"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:text="@{time}"
+            android:text="@{viewModelConfiguration.mTime}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +57,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="@dimen/layoutMargin"
             android:layout_marginBottom="8dp"
-            android:text="@{startPauseButtonLabel}"
+            android:text="@{viewModelConfiguration.startPauseButtonLabel}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/newProgram"
             app:layout_constraintHorizontal_bias="0.5"

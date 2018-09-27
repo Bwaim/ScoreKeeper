@@ -21,7 +21,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient"
     android:baselineAligned="false"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".ScoreActivity">
 
     <FrameLayout
         android:id="@+id/contentScoreFrame"

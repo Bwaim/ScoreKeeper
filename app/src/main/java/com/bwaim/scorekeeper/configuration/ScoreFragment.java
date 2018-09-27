@@ -26,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bwaim.scorekeeper.databinding.ScoreFragBinding;
 import com.bwaim.scorekeeper.di.Injectable;
 
 import javax.inject.Inject;
@@ -37,7 +38,7 @@ public class ScoreFragment extends Fragment implements Injectable {
 
     ConfigurationViewModel mConfigurationViewModel;
 
-//    private ScoreFragBinding mScoreFragBinding;
+    private ScoreFragBinding mScoreFragBinding;
 
     public ScoreFragment() {
         // Required empty public constructor
@@ -51,7 +52,7 @@ public class ScoreFragment extends Fragment implements Injectable {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-//        mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
+        mScoreFragBinding = ScoreFragBinding.inflate(inflater, container, false);
 //        mScoreFragBinding.setViewModel(mConfigurationViewModel);
 //        mScoreFragBinding.setLifecycleOwner(this);
 //
@@ -68,8 +69,8 @@ public class ScoreFragment extends Fragment implements Injectable {
 //        mScoreFragBinding.virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
 //
 //        // Inflate the layout for this fragment
-//        return mScoreFragBinding.getRoot();
-        return null;
+        return mScoreFragBinding.getRoot();
+//        return null;
     }
 
     @Override
@@ -77,5 +78,20 @@ public class ScoreFragment extends Fragment implements Injectable {
         super.onActivityCreated(savedInstanceState);
         mConfigurationViewModel = ViewModelProviders.of(this, viewModelFactory)
                 .get(ConfigurationViewModel.class);
+
+        mScoreFragBinding.setViewModel(mConfigurationViewModel);
+        mScoreFragBinding.setLifecycleOwner(this);
+
+        mScoreFragBinding.syntaxErrorA.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(1));
+
+        mScoreFragBinding.syntaxErrorB.setOnClickListener((View v) -> mConfigurationViewModel.syntaxError(2));
+
+        mScoreFragBinding.logicErrorA.setOnClickListener((View v) -> mConfigurationViewModel.logicError(1));
+
+        mScoreFragBinding.logicErrorB.setOnClickListener((View v) -> mConfigurationViewModel.logicError(2));
+
+        mScoreFragBinding.virusAttackA.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(1));
+
+        mScoreFragBinding.virusAttackB.setOnClickListener((View v) -> mConfigurationViewModel.virusAttack(2));
     }
 }
