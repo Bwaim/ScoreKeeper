@@ -20,6 +20,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
 
+import com.bwaim.scorekeeper.R;
 import com.bwaim.scorekeeper.data.Configuration;
 import com.bwaim.scorekeeper.data.source.ConfigurationRepository;
 
@@ -48,7 +49,7 @@ public class ConfigurationViewModel extends ViewModel {
 
     public final MutableLiveData<String> mTime = new MutableLiveData<>();
 
-    public final MutableLiveData<String> startPauseButtonLabel = new MutableLiveData<>();
+    public final MutableLiveData<Integer> mStartPauseButtonLabelId = new MutableLiveData<>();
 
     private MyCountDownTimer mCountDownTimer;
 
@@ -66,7 +67,7 @@ public class ConfigurationViewModel extends ViewModel {
 
     public void init() {
         isStarted = false;
-        startPauseButtonLabel.setValue("start");
+        mStartPauseButtonLabelId.setValue(R.string.start);
         loadConfiguration();
     }
 
@@ -202,8 +203,8 @@ public class ConfigurationViewModel extends ViewModel {
     }
 
     private void updateStartPauseLabel() {
-        startPauseButtonLabel.setValue(isStarted ? "pause"
-                : "start");
+        mStartPauseButtonLabelId.setValue(isStarted ? R.string.pause
+                : R.string.start);
     }
 
     public interface MyCountDownTimer {
