@@ -16,8 +16,9 @@
 
 package com.bwaim.scorekeeper.configuration;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
 import android.support.annotation.VisibleForTesting;
 
 import com.bwaim.scorekeeper.R;
@@ -37,7 +38,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * <p>
  */
 @Singleton
-public class ConfigurationViewModel extends ViewModel {
+public class ConfigurationViewModel extends AndroidViewModel {
 
     final long TIMER_INTERVAL = 1000;
 
@@ -53,11 +54,15 @@ public class ConfigurationViewModel extends ViewModel {
 
     private MyCountDownTimer mCountDownTimer;
 
+    private Application mApp;
+
     @VisibleForTesting
     public boolean isStarted;
 
     @Inject
-    public ConfigurationViewModel(ConfigurationRepository repository) {
+    public ConfigurationViewModel(Application app, ConfigurationRepository repository) {
+        super(app);
+        mApp = app;
         mConfigurationRepository = repository;
     }
 
@@ -74,8 +79,8 @@ public class ConfigurationViewModel extends ViewModel {
     private void loadConfiguration() {
         mConfigurationRepository.getConfiguration(mConfigurationLiveData::setValue);
 //        if (mConfigurationLiveData.getValue() != null) {
-            updateTime();
-            mCountDownTimer.attach(this);
+        updateTime();
+        mCountDownTimer.attach(this);
 //        }
     }
 
@@ -188,9 +193,10 @@ public class ConfigurationViewModel extends ViewModel {
         int scoreA = config.getScoreA();
         int scoreB = config.getScoreB();
         mTime.setValue(scoreA < scoreB
-                ? "WinA"
-                : scoreB < scoreA ? "WinB"
-                : "Draw");
+                ? mApp.getString(R.string.resultWin, mConfigurationLiveData.getValue().getNameA())
+                : scoreB < scoreA ? mApp.getString(R.string.resultWin
+                , mConfigurationLiveData.getValue().getNameB())
+                : mApp.getString(R.string.draw));
     }
 
     private void resetScore() {
