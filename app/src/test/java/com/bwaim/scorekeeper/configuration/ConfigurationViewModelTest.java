@@ -35,6 +35,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -48,7 +49,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.when;
 
 /**
@@ -98,11 +99,19 @@ public class ConfigurationViewModelTest {
         config = new Configuration(NAME_A, NAME_B, INITIAL_SCORE
                 , SYNTAX_ERROR, LOGIC_ERROR, VIRUS_ATTACK, INITIAL_TIME);
 
-        mConfigurationViewModel.init();
+        mConfigurationViewModel.setCountDownTimer(mockTimer);
 
-        verify(mConfigurationRepository).getConfiguration(mLoadConfigurationCallbackCaptor.capture());
-        mLoadConfigurationCallbackCaptor.getValue().onConfigurationLoaded(config);
-        mConfigurationViewModel.loadConfiguration();
+        doAnswer(
+                (final InvocationOnMock invocation) -> {
+                        LoadConfigurationCallback callback =
+                                (LoadConfigurationCallback)invocation.getArguments()[0];
+                        callback.onConfigurationLoaded(config);
+                        return null;
+                    }
+
+        ).when(mConfigurationRepository).getConfiguration(any(LoadConfigurationCallback.class));
+
+        mConfigurationViewModel.init();
     }
 
     private void setupContext() {
@@ -174,16 +183,17 @@ public class ConfigurationViewModelTest {
 
     @Test
     public void startTimer_labelChange() {
-        assertEquals(mContext.getString(R.string.start)
-                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+        checkNotNull(mConfigurationViewModel.mStartPauseButtonLabelId.getValue());
+        assertEquals(R.string.start
+                , mConfigurationViewModel.mStartPauseButtonLabelId.getValue().intValue());
 
         mConfigurationViewModel.startTimer();
-        assertEquals(mContext.getString(R.string.pause)
-                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+        assertEquals(R.string.pause
+                , mConfigurationViewModel.mStartPauseButtonLabelId.getValue().intValue());
 
         mConfigurationViewModel.startTimer();
-        assertEquals(mContext.getString(R.string.start)
-                , mConfigurationViewModel.startPauseButtonLabel.getValue());
+        assertEquals(R.string.start
+                , mConfigurationViewModel.mStartPauseButtonLabelId.getValue().intValue());
     }
 
     @Test
@@ -208,7 +218,7 @@ public class ConfigurationViewModelTest {
     @Test
     public void resetGame_press() {
 
-        String buttonLabel = mConfigurationViewModel.startPauseButtonLabel.getValue();
+        Integer buttonStringId = mConfigurationViewModel.mStartPauseButtonLabelId.getValue();
         String initialTime = mConfigurationViewModel.mTime.getValue();
 
         mConfigurationViewModel.startTimer();
@@ -216,7 +226,7 @@ public class ConfigurationViewModelTest {
         simulateOnTick();
         mConfigurationViewModel.resetGame();
 
-        assertEquals(buttonLabel, mConfigurationViewModel.startPauseButtonLabel.getValue());
+        assertEquals(buttonStringId, mConfigurationViewModel.mStartPauseButtonLabelId.getValue());
         assertEquals(initialTime, mConfigurationViewModel.mTime.getValue());
     }
 
