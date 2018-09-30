@@ -81,9 +81,6 @@ public class ConfigurationViewModelTest {
     @Mock
     private Application mContext;
 
-    @Captor
-    private ArgumentCaptor<LoadConfigurationCallback> mLoadConfigurationCallbackCaptor;
-
     @Mock
     private DefaultTimer mockTimer;
 
