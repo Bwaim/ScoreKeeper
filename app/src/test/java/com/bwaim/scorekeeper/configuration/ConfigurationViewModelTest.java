@@ -45,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -113,10 +114,6 @@ public class ConfigurationViewModelTest {
 
     private void setupContext() {
         when(mContext.getApplicationContext()).thenReturn(mContext);
-        when(mContext.getString(R.string.start))
-                .thenReturn("start");
-        when(mContext.getString(R.string.pause))
-                .thenReturn("pause");
         when(mContext.getString(eq(R.string.resultWin), any(String.class)))
                 .thenReturn(TEAM_A_WIN);
     }
@@ -221,6 +218,8 @@ public class ConfigurationViewModelTest {
         mConfigurationViewModel.startTimer();
         simulateOnTick();
         simulateOnTick();
+        assertNotEquals(initialTime, mConfigurationViewModel.mTime.getValue());
+        assertNotEquals(buttonStringId, mConfigurationViewModel.mStartPauseButtonLabelId.getValue());
         mConfigurationViewModel.resetGame();
 
         assertEquals(buttonStringId, mConfigurationViewModel.mStartPauseButtonLabelId.getValue());
@@ -257,6 +256,8 @@ public class ConfigurationViewModelTest {
         checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
         mConfigurationViewModel.startTimer();
         mConfigurationViewModel.syntaxError(1);
+        assertNotEquals(INITIAL_SCORE
+                , mConfigurationViewModel.mConfigurationLiveData.getValue().getScoreA());
         mConfigurationViewModel.resetGame();
 
         assertEquals(INITIAL_SCORE
@@ -336,7 +337,7 @@ public class ConfigurationViewModelTest {
     }
 
     @Test
-    public void updateTime_0DisplayWinner() {
+    public void updateTime_DisplayWinner() {
         checkNotNull(mConfigurationViewModel.mConfigurationLiveData.getValue());
         Configuration config = mConfigurationViewModel.mConfigurationLiveData.getValue();
         config.setScoreA(15);
