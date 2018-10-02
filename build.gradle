@@ -40,6 +40,7 @@ buildscript {
         test_runner = '1.0.2'
         rulesVersion = '1.0.2'
         espresso_core = '3.0.2'
+        robolectric_version = '3.8'
     }
     
     repositories {
